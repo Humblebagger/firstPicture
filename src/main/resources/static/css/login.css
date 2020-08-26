@@ -1,0 +1,89 @@
+input:-webkit-autofill {
+    box-shadow: 0 0 0 1000px #eef6fd inset;
+    -webkit-text-fill-color: #666;
+}
+
+#main-back-content{
+    width:100%;
+    height:560px;
+    background-color: rgb(39,145,195);
+}
+
+#main{
+    width:1260px;
+    min-width: 1250px;
+    height: 100%;
+    margin: 0 auto;
+    background-color: rgb(39,145,195);
+}
+
+#main-back{
+    width: 750px;
+    height: 100%;
+    display: inline-block;
+    background-image: url(../img/login-back.png);
+    background-position-x: 50%;
+    background-position-y: 10%;
+    background-repeat: no-repeat;
+    vertical-align: middle;
+}
+
+#main-content{
+    width: 450px;
+    display: inline-block;
+    background: white;
+    height: 460px;
+    margin: 0 0 20px 28px;
+    vertical-align: middle;
+}
+
+.main-content-logo{
+    width: 100%;
+    height: 160px;
+    padding: 60px 140px 0;
+}
+
+.main-logo-text{
+    width: 170px;
+}
+
+.login-msg{
+    width: 100%;
+    padding:10px 70px;
+    font-size: 20px;
+    height: 280px;
+    position: relative;
+}
+
+.login-msg-input{
+    position: relative;
+}
+
+.login-forget{
+    font-size: 10px;
+    position: absolute;
+    bottom: 47%;
+    cursor: pointer;
+}
+
+.login-forget a{
+    color: #666;
+    transition: 0.2s;
+}
+
+.login-forget a:hover{
+    color: #1DA1F2;
+}
+
+.login-btn{
+    position: absolute;
+    bottom: 23%;
+}
+
+.login-prompt{
+    color: red;
+    font-size: 13px;
+    position: absolute;
+    bottom: 42%;
+    right: 15%;
+}

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>火图网</title>
+    <link rel="shortcut icon" th:href="@{/img/logo.png}">
+    <link rel="stylesheet" th:href="@{/css/head.css}">
+    <link rel="stylesheet" th:href="@{/css/forget.css}">
+    <script th:src="@{/js/myCode.js}"></script>
+    <script>
+        window.onload=function () {
+            getClass("forget-setPsd")[0].onblur=function () {
+                getClass("forget-prompt")[0].innerHTML="";
+            }
+        }
+    </script>
+</head>
+<body>
+    <div id="head">
+        <div id="head-back">
+            <div id="header">
+                <div class="logo-text">
+                    <a th:href="@{/main/rotation}" style="color: white;">
+                        <img th:src="@{/img/hot-icon.png}">
+                        <div class="logo">火图网</div>
+                        <div class="small-logo">提供专业图片服务</div>
+                    </a>
+                </div>
+                <div id="logo-way" style="color: white">
+                    <span class="logo-dot">·</span>
+                    <span class="logo-way-text">安全中心</span>
+                </div>
+                <div id="login">
+                    <div class="add">
+                        <img th:src="@{/img/elipse.png}"><p>更多服务 </p>
+                    </div>
+                    <div class="user">
+                        <span class="user-way left"><a th:href="@{/account/goLogin}">登录</a></span>
+                        <span class="user-wrap">|</span>
+                        <span class="user-way right"><a th:href="@{/account/goRegister}">注册</a></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="main">
+        <div class="forget-head-back">
+            <ul class="forget-head">
+                <li class="forget-title forget-title-active">
+                    <span class="forget-num">1</span>
+                    <span class="forget-text">验证身份</span>
+                </li>
+                <span class="forget-wrap forget-wrap-over"></span>
+                <li class="forget-title forget-title-active">
+                    <span class="forget-num">2</span>
+                    <span class="forget-text">设置密码</span>
+                </li>
+                <span class="forget-wrap forget-wrap-active"></span>
+                <li class="forget-title">
+                    <span class="forget-num">3</span>
+                    <span class="forget-text">完成</span>
+                </li>
+            </ul>
+        </div>
+        <form class="forget-content" action="setPassword" method="post">
+            <span>新密码：</span>
+            <input type="password" name="newPassword" class="forget-setPsd">
+            <span>确认密码：</span>
+            <input type="password" name="confirmPassword">
+            <p th:text="${error}" class="forget-prompt" style="top: 42%;">哈哈哈</p>
+            <input type="submit" value="提交" class="forget-submit">
+        </form>
+    </div>
+    <div id="edition" style="border-top: 1px solid rgb(224,224,224);">Copyright © 2020 火图网 版权所有</div>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en"   xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>火图网</title>
+    <link rel="shortcut icon" th:href="@{/img/logo.png}">
+    <link rel="stylesheet" th:href="@{/css/head.css}">
+    <link rel="stylesheet" th:href="@{/css/personCenter.css}">
+    <script th:src="@{/js/myCode.js}"></script>
+    <script th:src="@{/js/personalUpload.js}"></script>
+</head>
+<body>
+    <div th:insert="personal :: head"></div>
+    <div class="main">
+        <div class="main-head">
+            <a  th:href="@{/accountPersonal/goMyCenter}">
+                个人资料
+                <span class="wrap"></span>
+            </a>
+            <a  th:href="@{/accountPersonal/goMyDownload}">
+                我的下载
+                <span class="wrap"></span>
+            </a>
+            <a th:href="@{/accountPersonal/goMyCollection}">
+                我的收藏
+                <span class="wrap"></span>
+            </a>
+            <a class="main-active" th:href="@{/accountPersonal/goMyUpload}">
+                开始创作
+                <span class="wrap"></span>
+            </a>
+        </div>
+    </div>
+    <div class="personal-back">
+        <p class="personal-back-head">达人上传</p>
+        <div class="personal-msg" style="padding: 30px 20px 20px;">
+            <div class="personalUpload-content">
+                <button class="personalUpload-btn">
+                    <input type="file" name="file" class="file" id="uploadFile">
+                    上传文件
+                </button>
+                <p class="personalUpload-text1">点击/拖拽一个或多个文件到这里上传</p>
+                <p class="personalUpload-text2">
+                    支持zip、jpg、psd、ai、cdr、tif、abr、ppt、eps、xd...等格式
+                </p>
+                <p class="personalUpload-text2">体积在2G一下</p>
+            </div>
+            <p class="personalUpload-prompt">温馨提醒:</p>
+            <p class="personalUpload-prompt">
+                <img th:src="@{/img/No.png}" alt="">
+                禁止抄袭,保护用户版权所有
+            </p>
+        </div>
+    </div>
+    <div class="common-over"></div>
+    <div th:insert="personal :: edition"></div>
+</body>
+</html>

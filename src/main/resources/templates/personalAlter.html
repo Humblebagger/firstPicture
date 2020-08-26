@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>火图网</title>
+    <link rel="shortcut icon" th:href="@{/img/logo.png}">
+    <link rel="stylesheet" th:href="@{/css/head.css}">
+    <link rel="stylesheet" th:href="@{/css/personCenter.css}">
+    <script th:src="@{/js/myCode.js}"></script>
+    <script th:src="@{/js/personalAlter.js}"></script>
+</head>
+<body>
+    <div id="head">
+        <div id="head-back">
+            <div id="header">
+                <div class="logo-text">
+                    <img th:src="@{/img/logo.png}">
+                    <div class="logo">火图网</div>
+                    <div class="small-logo">提供专业图片服务</div>
+                </div>
+                <div id="logo-way">
+                    <span class="logo-dot">·</span>
+                    <span class="logo-way-text">个人资料</span>
+                </div>
+                <div id="login">
+                    <div class="add"><a><img th:src="@{/img/sheng.png}">
+                        <p>更多服务 </p></a></div>
+                    <div class="user">
+                        <span class="user-way left">
+                            <a th:href="@{/main/rotation}">首页</a>
+                        </span>
+                        <span class="user-wrap">|</span>
+                        <span class="user-way right">
+                            <a th:href="@{/accountPersonal/goOut}">退出</a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="personalAlter-content">
+        <div class="personalAlter">
+            <div class="personalChange-left">
+                <form action="update" class="personal-content" method="post">
+                    <div class="personal-change">
+                        <span>昵称:</span>
+                        <input type="text" name="userName" class="personal-text" th:value="${session.Account.userName}">
+                        <p class="changeUser"></p>
+                    </div>
+                    <div class="personal-change">
+                        <span>性别:</span>
+                        <input class="personal-sex" type="radio" id="secret" name="sex" value="保密">
+                        <label for="secret">保密</label>
+                        <input class="personal-sex" type="radio" id="man" name="sex" value="男">
+                        <label for="man">男</label>
+                        <input class="personal-sex" type="radio" id="lady" name="sex" value="女">
+                        <label for="lady">女</label>
+                        <span th:text="${session.Account.sex}" style="opacity: 0;" class="personalSex"></span>
+                    </div>
+                    <div class="personal-change">
+                        <span>签名:</span>
+                        <textarea name="personalSignature" type="text" class="personal-textarea" th:text="${session.Account.personalSignature}"></textarea>
+                    </div>
+                    <div class="personal-change">
+                        <span>生日:</span>
+                        <input type="date" name="birthday" th:value="${session.Account.birthday}"/>
+                    </div>
+                    <div class="personal-change">
+                        <span>现居:</span>
+                        <select id="province" name="bigPosition" class="personal-address select-province">
+                            <option th:value="${session.Account.bigPosition}!=null?${session.Account.bigPosition}:请选择省份"
+                                    th:text="${session.Account.bigPosition}!=null?${session.Account.bigPosition}:请选择省份"
+                                    hidden selected></option>
+                        </select>
+                        <select id="city" name="smallPosition" class="personal-address">
+                            <option th:value="${session.Account.smallPosition}!=null?${session.Account.smallPosition}:请选择省份"
+                                    th:text="${session.Account.smallPosition}!=null?${session.Account.smallPosition}:请选择省份"
+                                    hidden selected></option>
+                        </select>
+                    </div>
+                    <input type="submit" value="保存" class="personal-save personal-btn">
+                    <a class="personal-cancel personal-btn" style="border: 1px solid #c1c1c1;color: #666;" th:href="@{/accountPersonal/goMyCenter}">取消</a>
+                </form>
+            </div>
+            <div class="personalChange-right">
+                <img th:src="'http://wxsaxaxa.icu/'+${session.Account.headPortrait}" alt="" class="headPhoto">
+                <div class="personalHead" >
+                    <p>上传头像</p>
+                    <span class="personalHead-close">x</span>
+                    <div class="personalHead-main">
+                        <div class="headPicture">
+                            <div class="selectBox"></div>
+                            <img src="" alt="" class="showPic">
+                        </div>
+                        <div class="headPicture-title">
+                            <div class="bigPicture">
+                                <div class="bigPicture-back">
+                                    <img src="" alt="">
+                                </div>
+                            </div>
+                            <span>头像预览</span>
+                            <img src="" alt="" class="later" style="opacity: 0;">
+                        </div>
+                    </div>
+                    <div class="personalHead-bottom">
+                        <button class="personalHead-upload">
+                            <input type="file" class="file" value="">
+                            重新选择
+                        </button>
+                        <button class="personalHead-save">保存并关闭</button>
+                    </div>
+                </div>
+                <button class="personalChange-btn">
+                    <input type="file" class="file">
+                    修改头像
+                </button>
+            </div>
+            <span class="personal-msg-wrap"></span>
+        </div>
+    </div>
+    <div th:insert="personal::edition" style="background: white;"></div>
+</body>
+</html>

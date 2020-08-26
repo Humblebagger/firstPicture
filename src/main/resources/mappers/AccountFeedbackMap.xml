@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pw.dao.AccountFeedbackMap">
+    <insert id="addAccountFeedback" parameterType="AccountFeedback">
+        insert into pictures_web.account_feedback(id,userName,accountFeedback,email)
+        values (null,#{userName},#{accountFeedback},#{email});
+    </insert>
+    <delete id="deleteAccountFeedback">
+        delete pictures_web.account_feedback
+        from pictures_web.account_feedback
+        where id = #{id}
+    </delete>
+    <select id="findAccountFeedback" resultType="AccountFeedback" parameterType="map">
+        select *
+        from pictures_web.account_feedback
+        <where>
+            <if test="userName!=null">userName = #{userName}</if>
+        </where>
+        limit #{start},#{pageSize};
+    </select>
+    <select id="findAccountFeedbackCount" resultType="int">
+    select count(*)
+    from pictures_web.account_feedback
+    </select>
+</mapper>

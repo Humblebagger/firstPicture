@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pw.dao.PageViewsMapper">
+    <select id="getPageViewById" parameterType="Integer">
+        SELECT pageviews
+        FROM pictures_web.picture_sort
+        WHERE id = #{id}
+    </select>
+
+    <update id="updatePageView" parameterType="Integer">
+        update pictures_web.picture_sort set pageviews = pageviews+1 where id = 9
+    </update>
+</mapper>

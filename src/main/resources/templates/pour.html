@@ -1,0 +1,302 @@
+<!-- //思路：
+// 瀑布流效果
+	// 1.第一行浮动（通过css实现）
+	// 2.如何区分第一行和后面的行
+		// 2.1先找到第一行最矮的
+		// 2.2后面的行的所有内容全部定位
+		// 2.3left设置最矮的元素的索引*任意一个元素的宽度
+		// 2.4top设置成上一行最矮的元素的高度
+		// 2.5修改最矮的那个元素，加上刚刚放置元素的高度
+	// 重置执行2.1向后的步骤 -->
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>瀑布流布局</title>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+    <!-- Favicon-->
+
+    <link rel="shortcut icon" th:href="@{/img/1.png}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/izmir.css}"/>
+
+    <script>
+        onload = function () {
+            var wf = new WaterF();
+            wf.init();
+        }
+        //想要改变窗口时实时刷新，可以写上下边的代码↓↓↓↓
+        // onresize = function(){
+        //     var wf = new WaterF();
+        //     wf.init();
+        // }
+        class WaterF {
+            constructor() {
+                this.clientW = document.documentElement.clientWidth;
+                this.abox = document.querySelectorAll(".box");
+                this.cont = document.querySelector(".cont");
+
+            }
+
+            init() {
+                // 根据屏幕的宽度 / 任意一个结构的宽度，得到一行最大能放几个
+                this.maxNum = parseInt(this.clientW / this.abox[0].offsetWidth);
+                // 根据一行能放置的个数 * 任意一张图片的宽度，得到了大框的真正的宽
+                this.cont.style.width = this.maxNum * this.abox[0].offsetWidth + "px";
+
+                // 完善布局之后，开始区分第一行和后面的行
+                this.firstLine();
+                this.otherLine();
+            }
+
+            firstLine() {
+                // 第一行，获取所有元素的高度放在一个数组中，准备获取最小值
+                this.heightArr = [];
+                for (var i = 0; i < this.maxNum; i++) {
+                    this.heightArr.push(this.abox[i].offsetHeight);
+                }
+            }
+
+            otherLine() {
+                // 需要拿到后面行的所有元素
+                for (var i = this.maxNum; i < this.abox.length; i++) {
+                    // 在拿到后面行的元素的时候，获取第一个行的最小值和最小值所在的索引
+                    // var min = Math.min(...this.heightArr);
+                    var min = getMin(this.heightArr);
+                    var minIndex = this.heightArr.indexOf(min);
+                    // 设置定位
+                    this.abox[i].style.position = "absolute";
+                    // 根据最小值设置top
+                    this.abox[i].style.top = min + "px";
+                    // 根据最小值的索引设置left
+                    this.abox[i].style.left = minIndex * this.abox[0].offsetWidth + "px";
+                    // 修改最小值为，原来的数据+当前新放置元素的高度
+                    this.heightArr[minIndex] = this.heightArr[minIndex] + this.abox[i].offsetHeight;
+                    // 剩下的交给循环
+                }
+            }
+        }
+
+        function getMin(arr) {
+            var myarr = [];
+            for (var j = 0; j < arr.length; j++) {
+                myarr.push(arr[j]);
+            }
+            return myarr.sort((a, b) => a - b)[0];
+        }
+
+
+
+    </script>
+</head>
+<body>
+<!----导航栏----->
+<div class="top">
+    <div class="bigbox">
+        <a th:href="rotation">
+            <div class="top-right">
+                <img th:src="@{/img/1.png}">
+                <div class="logo">火图网</div>
+                <div id="small-logo">专业图片服务</div>
+            </div>
+        </a>
+        <div class="top-middle">
+            <form th:action="search" method="get">
+                <input class="field" type="text" th:name="name" placeholder="  每日免费设计素材任意下载"/>
+                <input type="submit" class="fields" value="搜索">
+            </form>
+        </div>
+
+        <div class="top-left">
+            <div class="add"><a><img th:src="@{/img/3.png}">
+                <p>更多服务 </p>
+            </a></div>
+            <div class="add"><a><img th:src="@{/img/4.png}">
+                <p>加入Vip</p>
+            </a></div>
+            <div class="user">
+                <div th:if="${session.Account}==null">
+                    <a style="color: #E60026;text-decoration: none" th:href="@{/account/goLogin}">登录</a>|<a style="color: #E60026;text-decoration: none" th:href="@{/account/goRegister}">注册</a>
+                </div>
+                <div th:if="${session.Account}!=null">
+                    <a style="color: #E60026;text-decoration: none;font-size: 10px" th:href="@{/accountPersonal/goMyCenter}"><img th:src="'http://qdma85cm1.bkt.clouddn.com/'+${session.Account.headPortrait}" width="30px" style="border-radius: 50%"></a>
+                    <a style="color: #E60026;text-decoration: none;font-size: 10px" th:href="@{/accountPersonal/goOut}">退出</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!---分类---->
+<div class="comt">
+    <div class="bigbox" style="padding-left:20%">
+        <li><a th:href="@{/main/rotation}" id="special">首页
+
+        </a></li>
+        <li index="0"><a th:class="${lb=='shsh'}?'active':''" th:href="@{/main/category?lb=shsh}">社会生活</a></li>
+        <li index="1"><a th:class="${lb=='cygg'}?'active':''" th:href="@{/main/category?lb=cygg}">创意广告</a></li>
+        <li index="2"><a th:class="${lb=='zrfj'}?'active':''" th:href="@{/main/category?lb=zrfj}">自然风景</a></li>
+        <li index="3"><a th:class="${lb=='syys'}?'active':''" th:href="@{/main/category?lb=syys}">摄影艺术</a></li>
+        <li index="4"><a th:class="${lb=='ktty'}?'active':''" th:href="@{/main/category?lb=ktty}">卡通涂鸦</a></li>
+        <li index="5"><a th:class="${lb=='kxbj'}?'active':''" th:href="@{/main/category?lb=kxbj}">酷炫背景</a></li>
+        <li index="6"><a th:class="${lb=='swbg'}?'active':''" th:href="@{/main/category?lb=swbg}">商务办公</a></li>
+        <li index="7"><a th:class="${lb=='ysmx'}?'active':''" th:href="@{/main/category?lb=ysmx}">影视明星</a></li>
+    </div>
+</div>
+<div class="bigbox" style="position:relative;left:-3%;">
+    <div class="cont" th:style="${lb=='shsh'}?'display: block;'">
+        <div class="box" th:each="shsh:${shsh}">
+            <div class="pic">
+                <a th:href="@{'/main/goInformationL?id='+${shsh.id}}"> <img th:src="'http://wxsaxaxa.icu/'+${shsh.position}" alt=""></a>
+            </div>
+        </div>
+    </div>
+    <div class="cont" th:style="${lb=='cygg'}?'display: block;'">
+        <div class="box" th:each="cygg:${cygg}">
+            <div class="pic">
+                <a th:href="@{'/main/goInformationL?id='+${cygg.id}}">  <img th:src="'http://wxsaxaxa.icu/'+${cygg.position}" alt=""></a>
+            </div>
+        </div>
+    </div>
+    <div class="cont" th:style="${lb=='zrfj'}?'display: block;'">
+        <div class="box" th:each="zrfj:${zrfj}">
+            <div class="pic">
+                <a th:href="@{'/main/goInformationL?id='+${zrfj.id}}">   <img th:src="'http://wxsaxaxa.icu/'+${zrfj.position}" alt=""></a>
+            </div>
+        </div>
+    </div>
+    <div class="cont" th:style="${lb=='syys'}?'display: block;'">
+        <div class="box" th:each="syys:${syys}">
+            <div class="pic">
+                <a th:href="@{'/main/goInformationL?id='+${syys.id}}">   <img th:src="'http://wxsaxaxa.icu/'+${syys.position}" alt=""></a>
+            </div>
+        </div>
+    </div>
+    <div class="cont" th:style="${lb=='ktty'}?'display: block;'">
+
+        <div class="box" th:each="ktty:${ktty}">
+            <div class="pic">
+                <a th:href="@{'/main/goInformationL?id='+${ktty.id}}">   <img th:src="'http://wxsaxaxa.icu/'+${ktty.position}" alt=""></a>
+            </div>
+        </div>
+    </div>
+    <div class="cont" th:style="${lb=='kxbj'}?'display: block;'">
+
+        <div class="box" th:each="kxbj:${kxbj}">
+            <div class="pic">
+                <a th:href="@{'/main/goInformationL?id='+${kxbj.id}}">   <img th:src="'http://wxsaxaxa.icu/'+${kxbj.position}" alt=""></a>
+            </div>
+        </div>
+    </div>
+    <div class="cont" th:style="${lb=='swbg'}?'display: block;'">
+
+        <div class="box" th:each="swbg:${swbg}">
+            <div class="pic">
+                <a th:href="@{'/main/goInformationL?id='+${swbg.id}}">   <img th:src="'http://wxsaxaxa.icu/'+${swbg.position}" alt=""></a>
+            </div>
+        </div>
+    </div>
+    <div class="cont" th:style="${lb=='ysmx'}?'display: block;'">
+
+        <div class="box" th:each="ysmx:${ysmx}">
+            <div class="pic">
+                <a th:href="@{'/main/goInformationL?id='+${ysmx.id}}">   <img th:src="'http://wxsaxaxa.icu/'+${ysmx.position}" alt=""></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="box" th:each="pic:${picture}">
+        <div class="pic">
+            <a th:href="@{'/main/goInformationL?id='+${pic.id}}">   <img th:src="'http://wxsaxaxa.icu/'+${pic.position}" alt=""></a>
+        </div>
+    </div>
+</div>
+<div class="axial">
+    <div class="bigbox">
+        <div class="top-right" style="left: 100px;top: 50px;">
+            <img th:src="@{/img/1.png}">
+            <div class="logo">火图网</div>
+            <div id="small-logo">专业图片服务</div>
+        </div>
+        <img th:src="@{/img/99.jpg}" width="200px" height="auto" style="position: relative;top: 150px;left: -40px;">
+        <div class="f1" style="position: relative;float: right; right: 200px;top: 150px;">
+            <h4>常见问题</h4>
+            <p><a>成为签约设计师</a></p>
+            <p><a>注册登录</a></p>
+            <p><a>账号/密码</a></p>
+            <p><a>发票/售后</a></p>
+            <p><a>版权投诉</a></p>
+        </div>
+        <div class="f1" style="position: relative;float: right;right: 200px;top: 150px;">
+            <h4>关于火图网</h4>
+            <p><a>关于我们</a></p>
+            <p><a>加入我们</a></p>
+            <p><a>心系火图</a></p>
+            <p><a>Q群联盟</a></p>
+        </div>
+    </div>
+</div>
+<style>
+    .cont {
+        position: relative;
+        width: 1308px;
+        display: none;
+
+    }
+    .box {
+        float: left;
+        padding: 5px;
+        position: relative;
+        background:  url('../static/img/1.png') no-repeat center center;
+        background-size: 50px 50px;
+    }
+
+    .pic {
+        border: solid 1px black;
+        padding: 4px;
+        border-radius: 4px;
+    }
+
+    .pic img {
+        width: 198px;
+        display: block;
+    }
+
+    .comt {
+        width: 100%;
+        height: 44px;
+        background-color: #FFFFFF;
+        position: relative;
+        border-top: 1px solid #ddd;
+
+    }
+
+    .comt li {
+        width: 8%;
+        height: 44px;
+        line-height: 44px;
+        position: relative;
+        float: left;
+        list-style: none;
+        color: #666666;
+        font-size: 15px;
+        cursor: pointer;
+    }
+
+    .comt li:hover {
+        color: #E60026;
+        text-decoration: none;
+    }
+
+    .axial {
+        width: 100%;
+        height: 420px;
+        position: absolute;
+        top:3400px;
+        background: url(../static/img/download.svg) no-repeat center;
+        background-color: #2E3139;
+    }
+</style>
+
+</body>
+</html>

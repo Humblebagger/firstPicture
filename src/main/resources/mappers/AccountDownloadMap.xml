@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pw.dao.AccountDownloadMap">
+    <insert id="addAccountDownload" parameterType="AccountDownload">
+        insert into pictures_web.account_download(id,userName,picturePosition)
+        values (null,#{userName},#{picturePosition});
+    </insert>
+    <delete id="deleteAccountDownload">
+        delete pictures_web.account_download
+        from pictures_web.account_download
+        where id = #{id}
+    </delete>
+
+    <select id="findAccountDownload" resultMap="AccountPicture">
+        select *
+        from pictures_web.account_download
+        <where>
+            <if test="userName!=null">userName = #{userName}</if>
+        </where>
+    </select>
+    <resultMap id="AccountPicture" type="AccountDownload">
+        <result property="id" column="id"/>
+        <result property="userName" column="userName"/>
+        <result property="picturePosition" column="picturePosition"/>
+        <association property="picture" column="picturePosition" javaType="picture" select="getPicture"/>
+    </resultMap>
+    <select id="getPicture" resultType="Picture">
+        select * from pictures_web.picture_sort where position = #{position }
+    </select>
+    <select id="findCount" resultType="int">
+    select count(*)
+    from pictures_web.account_download
+    where userName = #{userName}
+    </select>
+</mapper>

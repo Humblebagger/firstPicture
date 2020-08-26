@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>火图网</title>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+    <!-- Favicon-->
+    <link rel="shortcut icon" th:href="@{/img/1.png}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/izmir.css}"/>
+
+    <script th:src="@{/js/jquery-3.5.1.js}"></script>
+    <script th:src="@{/js/main.js}"></script>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script>
+        window.onload = function () {
+            var aImg = document.querySelectorAll('img');
+            var len = aImg.length;
+            var n = 0;//存储图片加载到的位置，避免每次都从第一张图片开始遍历
+            window.onscroll = function () {
+                var seeHeight = document.documentElement.clientHeight;
+                var scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
+                for (var i = n; i < len; i++) {
+                    if (aImg[i].offsetTop < seeHeight + scrollTop) {
+                        if (aImg[i].getAttribute('src') == '') {
+                            aImg[i].src = aImg[i].getAttribute('data-src');
+                        }
+                        n = i + 1;
+                        console.log('n = ' + n);
+                    }
+                }
+            };
+
+            //滚动置顶
+            var naver = document.getElementById('naver');
+            var stick = document.getElementById('stick');
+            window.onscroll = function () {  //鼠标滚动事件
+                //被卷去的距离大于200显示小火箭，否则隐藏
+                //2.显示隐藏小火箭
+                if (scroll().top > 500) {
+                    naver.style.display = "block";
+                    document.getElementById('toper').style.display="block";
+                } else {
+                    naver.style.display = "none";
+                    document.getElementById('toper').style.display="none";
+                }
+                //每次移动滚动条的时候都给leader赋值，模拟leader获取距离顶部的距离
+                leader = scroll().top;
+            }
+            //3.缓动跳转到页面最顶端（利用我们的缓动动画）
+            var timer1 = null;
+            var target1 = 0; //目标位置
+            var leader = 0; //移动元素当前的位置
+            stick.onclick = function () {
+                //技术点：window.scrollTo(0,0);
+                //要用定时器，先清定时器
+                clearInterval(timer1);
+                timer1 = setInterval(function () {
+                    //获取步长
+                    var step = (target1 - leader) / 10;
+                    //二次处理步长
+                    step = step > 0 ? Math.ceil(step) : Math.floor(step);
+                    leader = leader + step;
+                    //屏幕(页面)滚动
+                    window.scrollTo(0, leader);  //屏幕(页面)滚动到某个位置
+                    //清除定时器
+                    if (leader === 0) {
+                        clearInterval(timer1);
+                    }
+                }, 25);
+            }
+            //第一个轮播图
+            // 获取节点，变量声明
+            var banner = document.querySelector('.banner'),
+                btn_left = document.querySelector('.btn_left'),
+                btn_right = document.querySelector('.btn_right'),
+                track = document.querySelector('.track'),
+                list_items = banner.querySelectorAll('div'),
+                listArr = [],
+                index = 0,
+                trackHtml = '',
+                tracks,
+                timer;
+
+            // 初始化
+            function init() {
+                // 根据图片高度自适应
+                banner.style.height = list_items[0].offsetHeight + 'px';
+                // 生成track坐标点元素
+                for (var i = 0, len = list_items.length; i < len; i++) {
+                    listArr.push(list_items[i].className)
+                    trackHtml += '<span></span>'
+                }
+                track.innerHTML = trackHtml;
+                // 获取坐标点元素
+                tracks = track.querySelectorAll('span');
+                tracks[0].setAttribute('class', 'focus');
+                play();
+            }
+
+            // 切换动画 target=1 下一张 target=-1 上一张
+            function move(target) {
+                list_items.forEach((item, i) => {
+                    item.setAttribute('class', listArr[i])
+                });
+                // 计算index下标值
+                index = (index + listArr.length + target) % listArr.length;
+                tracks.forEach((item, i) => {
+                    item.setAttribute('class', '')
+                });
+                tracks[index].setAttribute('class', 'focus')
+            }
+
+            // 下一张
+            function next() {
+                listArr.unshift(listArr[listArr.length - 1]);
+                listArr.pop();
+                move(1)
+            }
+
+            // 上一张
+            function previous() {
+                listArr.push(listArr[0]);
+                listArr.shift();
+                move(-1)
+            }
+
+            // 自动轮播
+            function play() {
+                timer = setInterval(next, 4000);
+            }
+
+            // 下一张绑定点击事件
+            btn_right.onclick = function () {
+                clearInterval(timer);
+                next();
+                play();
+            };
+            // 上一张绑定点击事件
+            btn_left.onclick = function () {
+                clearInterval(timer);
+                previous();
+                play();
+            };
+            // track绑定点击事件
+            track.addEventListener('mousemove', function (e) {
+                var e = e || window.e,
+                    //标准浏览器用ev.target，IE浏览器用event.srcElement
+                    target = e.target || e.srcElement,
+                    n = 0;
+                if (target.className !== 'track') {
+                    clearInterval(timer);
+                    for (var i = 0, len = tracks.length; i < len; i++) {
+                        tracks[i].setAttribute('class', '')
+                        if (tracks[i] === target) {
+                            n = i;
+                            tracks[i].setAttribute('class', 'focus');
+                        }
+                    }
+                    // 向右滑动
+                    if (n - index >= 0) {
+                        for (var i = 0; i < n - index; i++) {
+                            setTimeout(next, 160 * i);
+                        }
+                    }
+                    // 向左滑动
+                    else {
+                        for (var i = 0; i < index - n; i++) {
+                            setTimeout(previous, 160 * i);
+                        }
+                    }
+                    play();
+                }
+            })
+            init();
+            //第二个轮播图
+            var oD = document.getElementById('contain');
+            var aBtn = oD.getElementsByTagName('li');
+            var aDiv = document.getElementsByClassName('magic');
+            for (var i = 0; i < aBtn.length; i++) {
+                aBtn[i].index = i;
+                aBtn[i].onmousemove = function () {
+                    //this当前发生事件的元素
+                    //alert(this.value);
+                    for (var i = 0; i < aBtn.length; i++) {
+                        aBtn[i].className = '';
+                        aDiv[i].style.display = 'none';
+                    }
+                    this.className = 'active';
+                    //alert(this.index);
+                    aDiv[this.index].style.display = 'block';
+                };
+            }
+        }
+
+        //封装兼容的scrollTop(获取滚动卷起的高度)
+        function scroll() {
+            return {
+                "top": window.pageYOffset || document.body.scrollTop || document.documentElement.scrollTop,
+                "left": window.pageXOffset || document.body.scrollLeft || document.documentElement.scrollLeft
+            }
+        }
+
+        function add() {
+
+            var name = $("#name").val();
+            var email = $("#email").val();
+            var desc = $("#desc").val();
+
+            $.ajax({
+                type: "post",
+                url: "feedback",
+                data: {
+                    accountFeedback: desc,
+                    email: email,
+                    userName: name,
+                },
+                success: function (data) {
+                    if (data == 0) {
+                        alert("反馈成功！")
+                    } else {
+                        alert("反馈失败！")
+                    }
+                }
+            })
+        };
+        // 获取图片
+        var oImg = document.getElementsByTagName('img');
+        fn();           // 先让第一张图展现
+        window.onscroll = fn();
+
+        // 滚轮滚动事件
+
+        function fn() {
+            //判断图片是否在可视区内
+            for (var i = 0; i < oImg.length; i++) {
+                var oImgTo = oImg[i].offsetTop;
+                //元素距离页面顶端的距离
+                var clientH = document.documentElement.clientHeight;
+                //可视区的高度
+                var scrollT = document.documentElement.scrollTop || document.body.scrollTop;
+                //可视区顶部距离页面顶部的距离
+                if (clientH + scrollT >= oImgTo) {
+                    oImg[i].src = oImg[i].getAttribute('data-list');
+                }
+            }
+        }
+
+        //getAttribute() 方法根据名称取得属性值。
+    </script>
+</head>
+<div>
+    <!------侧边栏----->
+    <div id="naver">
+        <a href="#hotPic">
+            实事热图
+        </a>
+        <a href="#art">
+            文艺潮浪
+        </a>
+        <a href="#desgin">
+            潮流设计
+        </a>
+        <a href="#changes">
+            百变图库
+        </a>
+        <a id="stick" href="#">
+            <i class="fa fa-angle-double-up" aria-hidden="true"></i>
+            <p>置顶</p>
+        </a>
+    </div>
+    <!----导航栏----->
+    <div class="top">
+        <div class="bigbox">
+            <div class="top-right">
+                <img th:src="@{/img/1.png}">
+                <div class="logo">火图网</div>
+                <div id="small-logo">专业图片服务</div>
+            </div>
+
+            <div class="top-middle">
+                <form th:action="search" method="get">
+                    <input class="field" type="text" th:name="name" placeholder="  每日免费设计素材任意下载"/>
+                    <input type="submit" class="fields" value="搜索">
+                </form>
+            </div>
+
+            <div class="top-left">
+                <div class="add"><a><img th:src="@{/img/3.png}">
+                    <p>更多服务 </p>
+                </a></div>
+                <div class="add"><a><img th:src="@{/img/4.png}">
+                    <p>加入Vip</p>
+                </a></div>
+                <div class="user">
+                    <div th:if="${session.Account}==null">
+                        <a style="color: #E60026;text-decoration: none" th:href="@{/account/goLogin}">登录</a>|<a
+                            style="color: #E60026;text-decoration: none" th:href="@{/account/goRegister}">注册</a>
+                    </div>
+                    <div th:if="${session.Account}!=null">
+                        <a style="color: #E60026;text-decoration: none;font-size: 10px"
+                           th:href="@{/accountPersonal/goMyCenter}"><img
+                                th:src="'http://www.wxsaxaxa.icu/'+${session.Account.headPortrait}"
+                                width="30px" style="border-radius: 50%;"></a>
+                        <a style="color: #E60026;text-decoration: none;font-size: 10px"
+                           th:href="@{/accountPersonal/goOut}">退出</a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="toper" >
+        <div class="bigbox">
+            <div class="top-right">
+                <img th:src="@{/img/1.png}">
+                <div class="logo">火图网</div>
+                <div id="small-logo">专业图片服务</div>
+            </div>
+
+            <div class="top-middle">
+                <form th:action="search" method="get">
+                    <input class="field" type="text" th:name="name" placeholder="每日免费设计素材任意下载"/>
+                    <input type="submit" class="fields" value="搜索">
+                </form>
+            </div>
+
+            <div class="top-left">
+                <div class="add"><a><img th:src="@{/img/3.png}">
+                    <p>更多服务 </p>
+                </a></div>
+                <div class="user">
+                    <div th:if="${session.Account}==null">
+                        <a style="color: #E60026;text-decoration: none" th:href="@{/account/goLogin}">登录</a>|<a
+                            style="color: #E60026;text-decoration: none" th:href="@{/account/goRegister}">注册</a>
+                    </div>
+                    <div th:if="${session.Account}!=null">
+                        <a style="color: #E60026;text-decoration: none;font-size: 10px"
+                           th:href="@{/accountPersonal/goMyCenter}"><img
+                                th:src="'http://wxsaxaxa.icu/'+${session.Account.headPortrait}"
+                               style="border-radius: 50%;width: 30px;height: 30px;"></a>
+                        <a style="color: #E60026;text-decoration: none;font-size: 10px"
+                           th:href="@{/accountPersonal/goOut}">退出</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!---分类---->
+    <div class="first" .>
+        <div class="bigbox">
+            <div><a th:href="@{/main/rotation}" id="special">首页
+                <div id="strip"></div>
+            </a></div>
+            <div><a th:href="@{/main/category?lb=shsh}">社会生活</a></div>
+            <div><a th:href="@{/main/category?lb=cygg}">创意广告</a></div>
+            <div><a th:href="@{/main/category?lb=zrfj}">自然风景</a></div>
+            <div><a th:href="@{/main/category?lb=syys}">摄影艺术</a></div>
+            <div><a th:href="@{/main/category?lb=ktty}">卡通涂鸦</a></div>
+            <div><a th:href="@{/main/category?lb=kxbj}">酷炫背景</a></div>
+            <div><a th:href="@{/main/category?lb=swbg}">商务办公</a></div>
+            <div><a th:href="@{/main/category?lb=ysmx}">影视明星</a></div>
+        </div>
+    </div>
+    <!----第一个轮播图------>
+    <div class="second">
+        <div class="banner">
+            <div class="first_item" th:each="Image1:${pictureRotation1}">
+                <a th:href="@{'/main/goInformationL?id='+${Image1.id}}">
+                    <img th:src="'http://wxsaxaxa.icu/'+${Image1.position}">
+                </a>
+            </div>
+            <div class="second_item" th:each="Image2:${pictureRotation2}">
+                <a th:href="@{'/main/goInformationL?id='+${Image2.id}}"><img
+                        th:src="'http://wxsaxaxa.icu/'+${Image2.position}"></a>
+            </div>
+            <div class="" th:each="Image3:${pictureRotation3}">
+                <a th:href="@{'/main/goInformationL?id='+${Image3.id}}"><img
+                        th:src="'http://wxsaxaxa.icu/'+${Image3.position}"></a>
+            </div>
+            <div class="" th:each="Image4:${pictureRotation4}">
+                <a th:href="@{'/main/goInformationL?id='+${Image4.id}}"><img
+                        th:src="'http://wxsaxaxa.icu/'+${Image4.position}"></a>
+            </div>
+            <div class="last_item" th:each="Image5:${pictureRotation5}">
+                <a th:href="@{'/main/goInformationL?id='+${Image5.id}}"><img
+                        th:src="'http://wxsaxaxa.icu/'+${Image5.position}"></a>
+            </div>
+            <!-- 这里切换按钮用大于小于号代替icon图标 -->
+            <i class="btn_left btn">
+                <</i> <i class="btn_right btn">>
+        </i>
+        </div>
+        <div class="track"></div>
+    </div>
+
+    <!------大分类------>
+    <div class="seven">
+        <div class="bigbox">
+            <div class=" word"><span class=" worda">CLASSIFY</span>
+                <div><strong class="wordb">精细</strong>
+                    <strong class="wordb">分类</strong></div>
+            </div>
+            <div class="classify"><i class="fa fa-picture-o fa-x" aria-hidden="true"></i>
+                <h>照片</h>
+                <a th:href="@{/main/goSixteen?name=11}"><p>教育人像</p></a><a th:href="@{/main/goSixteen?name=12}"><p>
+                    青年生活</p></a></div>
+            <div class="classify"><i class="fa fa-magic" aria-hidden="true"></i>
+                <h>创意背景</h>
+                <a th:href="@{/main/goSixteen?name=21}"><p>三维模型</p></a><a th:href="@{/main/goSixteen?name=22}"><p>
+                    背景素材</p></a></div>
+            <div class="classify"><i class="fa fa-sun-o" aria-hidden="true"></i>
+                <h>自然风景</h>
+                <a th:href="@{/main/goSixteen?name=31}"><p>夏日炎炎</p></a><a th:href="@{/main/goSixteen?name=32}"><p>
+                    风景建筑</p></a></div>
+            <div class="classify"><i class="fa fa-file-word-o" aria-hidden="true"></i>
+                <h>办公文档</h>
+                <a th:href="@{/main/goSixteen?name=41}"><p>工作汇报</p></a><a th:href="@{/main/goSixteen?name=42}"><p>
+                    word简历</p></a></div>
+            <div class="classify"><i class="fa fa-paint-brush" aria-hidden="true"></i>
+                <h>涂鸦</h>
+                <a th:href="@{/main/goSixteen?name=51}"><p>简约插画</p></a><a th:href="@{/main/goSixteen?name=52}"><p>
+                    卡通元素</p></a></div>
+            <div class="classify"><i class="fa fa-fighter-jet" aria-hidden="true"></i>
+                <h>免抠元素</h>
+                <a th:href="@{/main/goSixteen?name=61}"><p>GIF动图</p></a><a th:href="@{/main/goSixteen?name=62}"><p>
+                    动态背景</p></a></div>
+            <div class="classify"><i class="fa fa-superpowers" aria-hidden="true"></i>
+                <h>酷炫模板</h>
+                <a th:href="@{/main/goSixteen?name=71}"><p>平面广告</p></a><a th:href="@{/main/goSixteen?name=72}"><p>
+                    手机配图</p></a></div>
+            <div class="classify"><i class="fa fa-font" aria-hidden="true"></i>
+                <h>摄影艺术</h>
+                <a th:href="@{/main/goSixteen?name=81}"><p>摄影API</p></a><a th:href="@{/main/goSixteen?name=82}"><p>
+                    更多创意</p></a></div>
+        </div>
+    </div>
+    <div class="three">
+        <div class="bigbox">
+            <div class=" word"><span class=" worda">CURRENT</span>
+                <div><strong class="wordb">实事</strong>
+                    <strong class="wordb">热图</strong></div>
+            </div>
+            <div id="contain">
+                <li index="0" style="margin-left:36% ;">新冠肺炎</li>
+                <li index="1">激情竞技</li>
+                <li index="2">异国动物</li>
+                <li index="3" class="active">旅行风景</li>
+                <div class="magic">
+                    <div class="c" th:each="xgfy:${xgfy}">
+                        <img th:attr="data-src='http://wxsaxaxa.icu/'+${xgfy.position}">
+                        <div th:if="${session.Account}!=null">
+                            <a th:href="@{'/main/download?name='+${xgfy.position}}">
+                                <div type="button" id="load">下载</div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="magic">
+                    <div class="c" th:each="jqjj:${jqjj}">
+                        <img th:attr="data-src='http://wxsaxaxa.icu/'+${jqjj.position}">
+                        <div th:if="${session.Account}!=null">
+                            <a th:href="@{'/main/download?name='+${jqjj.position}}">
+                                <div type="button" id="load">下载</div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="magic">
+                    <div class=" c" th:each="ygdw:${ygdw}">
+                        <img th:attr="data-src='http://wxsaxaxa.icu/'+${ygdw.position}">
+                        <div th:if="${session.Account}!=null">
+                            <a th:href="@{'/main/download?name='+${ygdw.position}}">
+                                <div type="button" id="load">下载</div>
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="magic" style="display: block">
+                    <div class="c" th:each="lxfj:${lxfj}">
+                        <img th:attr="data-src='http://wxsaxaxa.icu/'+${lxfj.position}">
+                        <div th:if="${session.Account}!=null">
+                            <a th:href="@{'/main/download?name='+${lxfj.position}}">
+                                <div type="button" id="load">下载</div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="four">
+        <div class="bigbox">
+            <div class=" word" id="art"><span class=" worda">LITERATURE</span>
+                <div><strong class="wordb">文艺</strong>
+                    <strong class="wordb">潮浪</strong></div>
+            </div>
+            <div class="d" th:each="tpzj:${tpzj}">
+                <div th:if="${session.Account}!=null">
+                    <a th:href="@{'/main/collection?name='+${tpzj.position}}"><i class="fa fa-star fa-2x"
+                                                                                 aria-hidden="true"></i></a>
+                </div>
+                <a th:href="@{'/main/goInformationL?id='+${tpzj.id}}">
+                    <img th:attr="data-src='http://wxsaxaxa.icu/'+${tpzj.position}"></a>
+                <span id="basic">基础</span>
+                <h th:text="${tpzj.description}"></h>
+            </div>
+        </div>
+    </div>
+    <div class="six">
+        <div class="bigbox">
+            <div class=" word" id="desgin"><span class=" worda">DESIGN</span>
+                <div><strong class="wordb">新鲜</strong>
+                    <strong class="wordb">设计</strong></div>
+            </div>
+            <div th:each="wztp:${wztp}">
+                <div class="s">
+                    <a th:href="@{'/main/goDetailed?name='+${wztp.name}}">
+                        <img th:src="'http://wxsaxaxa.icu/'+${wztp.position}"></a>
+                    <p th:text="${wztp.description}"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="bigbox">
+        <div class=" word" id="changes"><span class=" worda">ABUNDANT</span>
+            <div><strong class="wordb">百变</strong>
+                <strong class="wordb">图库</strong>
+            </div>
+        </div>
+        <div class="eigth">
+            <div class="col-item" style="width: 23%;height: 280px;" th:each="sydb9:${sydb9}">
+                <figure class="c4-izmir c4-image-zoom-in" tabindex="0">
+                    <img th:attr="data-src='http://wxsaxaxa.icu/'+${sydb9.position}" height="260px">
+                    <figcaption>
+                        <div th:if="${session.Account}!=null">
+                            <a th:href="@{'/main/download?name='+${sydb9.position}}">
+                                <div type="button" id="download">下载</div>
+                            </a>
+                        </div>
+                    </figcaption>
+                </figure>
+            </div>
+            <div class="col-item" style="width: 23%;height: 260px;" th:each="sydb5:${sydb5}">
+                <figure class="c4-izmir c4-image-zoom-in" tabindex="0">
+                    <img th:attr="data-src='http://wxsaxaxa.icu/'+${sydb5.position}">
+                    <figcaption>
+                        <div th:if="${session.Account}!=null">
+                            <a th:href="@{'/main/download?name='+${sydb5.position}}">
+                                <div type="button" id="download">下载</div>
+                            </a>
+                        </div>
+                    </figcaption>
+                </figure>
+            </div>
+            <div class="col-item" style="width: 23%;height: 280px;" th:each="sydb3:${sydb3}">
+                <figure class="c4-izmir c4-image-zoom-in" tabindex="0">
+                    <img th:attr="data-src='http://wxsaxaxa.icu/'+${sydb3.position}">
+                    <figcaption>
+                        <div th:if="${session.Account}!=null">
+                            <a th:href="@{'/main/download?name='+${sydb3.position}}">
+                                <div type="button" id="download">下载</div>
+                            </a>
+                        </div>
+                    </figcaption>
+                </figure>
+            </div>
+            <div class="col-item" style="width: 23%;height: 280px;" th:each="sydb4:${sydb4}">
+                <figure class="c4-izmir c4-image-zoom-in" tabindex="0">
+                    <img th:attr="data-src='http://wxsaxaxa.icu/'+${sydb4.position}">
+                    <figcaption>
+                        <div th:if="${session.Account}!=null">
+                            <a th:href="@{'/main/download?name='+${sydb4.position}}">
+                                <div type="button" id="download">下载</div>
+                            </a>
+                        </div>
+                    </figcaption>
+                </figure>
+            </div>
+            <div class="col-item" style="width: 32%;height: 170px;" th:each="sydb1:${sydb1}">
+                <figure class="c4-izmir c4-image-zoom-in" tabindex="0">
+                    <img th:attr="data-src='http://wxsaxaxa.icu/'+${sydb1.position}">
+                    <figcaption>
+                        <div th:if="${session.Account}!=null">
+                            <a th:href="@{'/main/download?name='+${sydb1.position}}">
+                                <div type="button" id="download" style="left: -80px">下载</div>
+                            </a>
+                        </div>
+                    </figcaption>
+                </figure>
+            </div>
+            <div class="col-item" style="width: 14%;height: 240px;" th:each="sydb2:${sydb2}">
+                <figure class="c4-izmir c4-image-zoom-in" tabindex="0">
+                    <img th:attr="data-src='http://wxsaxaxa.icu/'+${sydb2.position}">
+                    <figcaption>
+                        <div th:if="${session.Account}!=null">
+                            <a th:href="@{'/main/download?name='+${sydb2.position}}">
+                                <div type="button" id="download" style="top:-110px;left:-80px">下载</div>
+                            </a>
+                        </div>
+                    </figcaption>
+                </figure>
+            </div>
+            <div class="col-item" style="width: 23%;height: 280px;" th:each="sydb7:${sydb7}">
+                <figure class="c4-izmir c4-image-zoom-in" tabindex="0">
+                    <img th:attr="data-src='http://wxsaxaxa.icu/'+${sydb7.position}">
+                    <figcaption>
+                        <div th:if="${session.Account}!=null">
+                            <a th:href="@{'/main/download?name='+${sydb7.position}}">
+                                <div type="button" id="download">下载</div>
+                            </a>
+                        </div>
+                    </figcaption>
+                </figure>
+            </div>
+            <div class="col-item" style="width: 23%;height: 280px;" th:each="sydb8:${sydb8}">
+                <figure class="c4-izmir c4-image-zoom-in" tabindex="0">
+                    <img th:attr="data-src='http://wxsaxaxa.icu/'+${sydb8.position}">
+                    <figcaption>
+                        <div th:if="${session.Account}!=null">
+                            <a th:href="@{'/main/download?name='+${sydb8.position}}">
+                                <div type="button" id="download">下载</div>
+                            </a>
+                        </div>
+                    </figcaption>
+                </figure>
+            </div>
+            <div class="col-item" style="width: 23%;height: 195px;position: relative;top:-15px"
+                 th:each="sydb6:${sydb6}">
+                <figure class="c4-izmir c4-image-zoom-in" tabindex="0">
+                    <img th:attr="data-src='http://wxsaxaxa.icu/'+${sydb6.position}" height="200px">
+                    <figcaption>
+                        <div th:if="${session.Account}!=null">
+                            <a th:href="@{'/main/download?name='+${sydb6.position}}">
+                                <div type="button" id="download" style="top:-80px">下载</div>
+                            </a>
+                        </div>
+                    </figcaption>
+                </figure>
+            </div>
+            <div class="col-item" style="width: 23%;height: 280px;" th:each="sydb10:${sydb10}">
+                <figure class="c4-izmir c4-image-zoom-in" tabindex="0">
+                    <img th:attr="data-src='http://wxsaxaxa.icu/'+${sydb10.position}">
+                    <figcaption>
+                        <div th:if="${session.Account}!=null">
+                            <a th:href="@{'/main/download?name='+${sydb10.position}}">
+                                <div type="button" id="download" style="top:-200px">下载</div>
+                            </a>
+                        </div>
+                    </figcaption>
+                </figure>
+            </div>
+            <div class="col-item" style="width: 23%;height: 280px;" th:each="sydb11:${sydb11}">
+                <figure class="c4-izmir c4-image-zoom-in" tabindex="0">
+                    <img th:attr="data-src='http://wxsaxaxa.icu/'+${sydb11.position}">
+                    <figcaption>
+                        <div th:if="${session.Account}!=null">
+                            <a th:href="@{'/main/download?name='+${sydb11.position}}">
+                                <div type="button" id="download" style="top:-200px">下载</div>
+                            </a>
+                        </div>
+                    </figcaption>
+                </figure>
+            </div>
+            <div class="col-item" style="width: 23%;height: 280px;" th:each="sydb12:${sydb12}">
+                <figure class="c4-izmir c4-image-zoom-in" tabindex="0">
+                    <img th:attr="data-src='http://wxsaxaxa.icu/'+${sydb12.position}">
+                    <figcaption>
+                        <div th:if="${session.Account}!=null">
+                            <a th:href="@{'/main/download?name='+${sydb12.position}}">
+                                <div type="button" id="download" style="top:-200px">下载</div>
+                            </a>
+                        </div>
+                    </figcaption>
+                </figure>
+            </div>
+            <div class="col-item" style="width: 23%;height: 200px;position: relative;top:-95px"
+                 th:each="sydb13:${sydb13}">
+                <figure class="c4-izmir c4-image-zoom-in" tabindex="0">
+                    <img th:attr="data-src='http://wxsaxaxa.icu/'+${sydb13.position}">
+                    <figcaption>
+                        <div th:if="${session.Account}!=null">
+                            <a th:href="@{'/main/download?name='+${sydb13.position}}">
+                                <div type="button" id="download" style="top:-80px">下载</div>
+                            </a>
+                        </div>
+                    </figcaption>
+                </figure>
+            </div>
+        </div>
+    </div>
+    <div class="nine">
+        <div class="bigbox">
+            <li>
+                <img th:src="@{/img/7.png}"/>
+                <div>正版承诺</div>
+                <p>拒绝盗版，侵权赔付最高无限额</p>
+            </li>
+            <li>
+                <img th:src="@{/img/8.png}"/>
+                <div>版权保障 商用无忧</div>
+                <p>摄图网对全站所有素材均拥有版权模特均已获得肖像权授权</p>
+            </li>
+            <li>
+                <img th:src="@{/img/9.png}"/>
+                <div>授权证书 在线获取</div>
+                <p>在线生成授权证书企业商用不受时间、次数限制</p>
+            </li>
+            <li>
+                <img th:src="@{/img/2.png}"/>
+                <div>全天候 贴心服务</div>
+                <p>发票支持，报销无忧团队协作，多人使用，云端共享</p>
+            </li>
+
+        </div>
+    </div>
+    <div class="bottom">
+        <div class="bigbox">
+            <div class="f1">
+                <h4>常见问题</h4>
+                <p><a>成为签约设计师</a></p>
+                <p><a>注册登录</a></p>
+                <p><a>账号/密码</a></p>
+                <p><a>发票/售后</a></p>
+                <p><a>版权投诉</a></p>
+            </div>
+            <div class="f1">
+                <h4>关于火图网</h4>
+                <p><a>关于我们</a></p>
+                <p><a>加入我们</a></p>
+                <p><a>心系火图</a></p>
+                <p><a>Q群联盟</a></p>
+            </div>
+            <div class="f1">
+                <h4>产品服务</h4>
+                <p><a>官方微博</a></p>
+                <p><a>帮助中心</a></p>
+            </div>
+            <div class="f1">
+                <h4>合作伙伴</h4>
+                <p><a>代理商分销</a></p>
+                <p><a>VIP代购</a></p>
+            </div>
+            <div class="f2">
+                <h3>意见投递箱</h3>
+                <!-- Large modal -->
+                <button type="button" class=" add btn btn-danger" data-toggle="modal" data-target="#myedit"
+                        style="width: 150px;height: 50px;position: relative;left: 70px;margin: 15px">反馈
+                </button>
+                <i class="fa fa-envelope-o fx-lg" aria-hidden="true"
+                   style="position: absolute; bottom: 50px;left:85px;"></i>
+                <h style="position: relative;bottom: 4px;left: 100px;">1209644470@qq.com</h>
+                <!--add -->
+                <div class="modal fade" id="myedit" tabindex="-1" role="dialog" aria-labelledby="myedit"
+                     aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h3 class="modal-title" id="myedit">意见反馈</h3>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form>
+                                    <div class="form-group">
+                                        <label class="control-label">姓名：</label>
+                                        <input type="text" class="form-control" id="name">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">电子邮箱：</label>
+                                        <input type="text" class="form-control" id="email">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">反馈内容:</label>
+                                        <textarea class="form-control" id="desc"></textarea>
+                                    </div>
+                                </form>
+                            </div>
+
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal"
+                                        style="position: relative;top:10px;width:60px;">关闭
+                                </button>
+                                <button type="button" onclick="add();" data-dismiss="modal" class=" btn btn-primary"
+                                        style="position: relative;top: 10px;width:60px;">提交
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    <div class="bottom-bottom">
+        <div class="bigbox">
+            <h>Copyright © 2017.Company name All rights reserved.</h>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+	</head>
+	<body>
+		<style>
+			* {
+				padding: 0;
+				margin: 0;
+			}
+
+			body {
+				min-width: 1050px;
+				background: #FFFFFF;
+				margin: auto auto;
+				overflow: auto;
+			}
+
+			.bigbox {
+				/*这个是控制其缩放后居中的*/
+				max-width: 1200px;
+				min-width: 400px;
+				height: 100%;
+				margin: 0 auto;
+			}
+
+			button {
+				width: 200px;
+				height: 50px;
+				border: 4px solid red;
+				border-radius: 25px;
+				background: #FFFFFF;
+				letter-spacing: 2px;
+				overflow: hidden;
+				position: relative;
+			}
+
+			button:hover {
+				color: #FFFFFF;
+				cursor: pointer;
+			}
+
+			button::before {
+				position: absolute;
+				content: "";
+				bottom: 0;
+				left: -110%;
+				width: 200px;
+				height: 50px;
+				background: red;
+				transition: 660ms;
+				opacity: 0.9;
+				border-radius: 40px;
+				z-index: auto;
+			}
+
+			button:hover:before {
+				left: -2.5%;
+			}
+
+			.found {
+				margin: 7% 0 0 20%;
+			}
+
+			img {
+				width: 400px;
+				height: auto;
+				margin: 0 3%;
+			}
+
+			img,
+			.ufound {
+				float: left;
+				position: relative;
+			}
+
+			.ufound h {
+				font-size: 7.5em;
+				margin: 15px 0px;
+				font-weight: 600;
+
+			}
+
+			.ufound h3 {
+				font-size: 35px;
+			}
+
+			.ufound p {
+				width: 350px;
+				margin: 10px 0;
+			}
+			i{
+				color: #000000;
+				position: relative;
+			}
+			.bouton{
+			    width:30px;
+			    height:30px;
+			    padding: 10px;
+			    border-radius:30px;
+			    overflow:hidden;
+			    transition:all 0.1s;
+				color: black;
+				position: relative;
+				margin: 2% 0 0 5%;
+			}
+			.bouton:hover{
+			    width:250px;
+			    height:30px;
+			    border-radius:30px;
+			    background:red;
+				cursor: pointer;
+			}
+			.texteduboutton
+			{
+			    float:left;
+			    line-height:30x;
+			    color:#ffffff;
+			    font-family:'Roboto';
+			    font-weight:300;
+			    font-size:18px;
+			}
+			
+		</style>
+		<div class="bouton">
+		    <a href="file:///C:/Users/12096/Desktop/%E5%9B%BE/%E5%9B%BE.html">
+		        <span class="texteduboutton"> <i class="fa fa-bars fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;返回首页&nbsp;&nbsp;联系客服&nbsp;&nbsp;反馈</span></a>
+		</div>
+		           
+			
+		<div class="found">
+			<div class="bigbox">
+				<img src="../../static/img/2.jpg" />
+				<div class="ufound">
+					<h>404</h>
+					<h3>哦! 页面丢失</h3>
+					<p>您所寻找的页面不存在。你可以点击下面的按钮，返回主页。
+					</p>
+					<a href="/firePictures_war_exploded/main/rotation">
+					<div id="div3">
+						<button>
+							<h2>
+
+								返回首页
+
+							</h2>
+						</button>
+				</div>
+					</a>
+			</div>
+		</div>
+		</div>
+		</div>
+		
+	</body>
+</html>

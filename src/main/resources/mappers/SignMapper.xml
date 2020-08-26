@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pw.dao.SignMapper">
+    <select id="sige" resultType="account">
+        select userName
+        from pictures_web.account
+        where TO_DAYS(date) = TO_DAYS(DATE_FORMAT(NOW(), '%Y %m %d '))
+          and userName = #{userName}
+
+    </select>
+    <update id="addIntegral" parameterType="account">
+        update pictures_web.account
+        <set>integral = #{integral+5},date = DATE_FORMAT(NOW(), '%Y %m %d ')</set>
+        <where>userName=#{userName}</where>
+    </update>
+    <select id="AllIntegral" parameterType="account">
+        select integral
+        from pictures_web.account
+        <where>userName=#{userName}</where>
+
+    </select>
+    <update id="convertVip" parameterType="account">
+        update pictures_web.account
+        <set>
+            <if test="integral>=50">integral=integral-50 and isVip=1</if>
+        </set>
+        where isVip = 0
+        and userName = #{userName}
+    </update>
+
+
+</mapper>

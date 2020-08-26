@@ -1,0 +1,650 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+    outline: none;
+}
+
+
+input:-webkit-autofill {
+    box-shadow: 0 0 0 1000px #ffffff inset;
+    -webkit-text-fill-color: #000000;
+}
+
+.back{
+    width: 100%;
+    min-width: 1260px;
+    height: 450px;
+    position: relative;
+    overflow: hidden;
+}
+
+.back span,
+.back input[type=submit]{
+    position: absolute;
+    bottom: 10%;
+    right: 5%;
+    border: 1px solid rgb(198,47,47);
+    color: rgb(198,47,47);
+    width: 80px;
+    height: 30px;
+    line-height: 27px;
+    text-align: center;
+    cursor: pointer;
+    z-index: 1;
+    background: white;
+    border-radius: 6px;
+}
+
+.back input[type=submit]{
+    bottom: 4% !important;
+    font-size: 16px;
+}
+
+.back:before{
+    position: absolute;
+    bottom: 0;
+    content: "";
+    min-width: 1260px;
+    height: 180px;
+    background: linear-gradient(transparent,rgba(0,0,0,.3));
+}
+
+.backPerPicture {
+    width: 100px;
+    margin: 0 auto;
+}
+
+.backPerPicture .headPhoto{
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    position: relative;
+    top: -50px;
+    border: 1px solid #a8a8a8;
+}
+
+.main{
+    width: 100%;
+    min-width: 1260px;
+    border-top: 25px solid #f6f6f6;
+}
+
+.main-head{
+    width: 600px;
+    margin: 0 auto;
+    display: flex;
+    text-align: center;
+    height: 50px;
+    line-height: 50px;
+}
+
+.main-head a{
+    width: 150px;
+    position: relative;
+    cursor: pointer;
+    transition: 0.2s;
+    color: #666;
+}
+
+.main-head a:hover{
+    color: rgb(198,47,47);
+}
+
+.main-head a:hover .wrap{
+    background:rgb(198,47,47);
+}
+
+.wrap{
+    position: absolute;
+    width: 70px;
+    height: 4px;
+    bottom: 0;
+    left: -5px;
+    margin: 0 40px;
+    transition: 0.2s;
+}
+
+.main-active{
+    color: rgb(198,47,47) !important;
+}
+
+.main-active .wrap{
+    background: rgb(198,47,47);
+}
+
+.person-msg{
+    width: 200px;
+    margin: -50px auto 20px;
+    text-align: center;
+}
+
+.person-msg p{
+    margin: 5px 0;
+    color: #666;
+}
+
+.personal-back{
+    min-width: 1260px;
+    background: #f6f6f6;
+    padding: 0 30px 100px;
+    color: #666;
+}
+
+.personal-back-head{
+    height: 72px;
+    line-height: 72px;
+    font-size: 20px;
+    letter-spacing: 2px;
+}
+
+.personal-msg,
+.personalLoad-msg{
+    background: white;
+    position: relative;
+}
+
+.personal-content{
+    padding: 50px 70px;
+}
+
+.personalAlter{
+    position: relative;
+}
+
+.personalAlter::after{
+    bottom:0 !important;
+}
+
+.personal-msg::after,
+.personalAlter-content::before,
+.personalAlter::after,
+.personalLoad-wrap{
+    content: "";
+    position: absolute;
+    bottom: -100px;
+    width: 100%;
+    height: 1px;
+    left: 0;
+    background: #e0e0e0;
+}
+
+.personal-change{
+    margin: 30px 0;
+    position: relative;
+}
+
+.changeUser{
+    position: absolute;
+    left: 80px;
+    top: 25px;
+    font-size: 11px;
+    color: rgb(198,47,47);
+}
+
+
+.personal-change input,
+.personal-change p{
+    display: inline-block;
+    vertical-align: middle;
+    height: 30px;
+    text-indent: 5px;
+    line-height: 30px;
+}
+
+.personal-text{
+    width: 400px;
+    text-indent: 10px;
+}
+
+.personal-textarea{
+    width: 400px;
+    height: 150px;
+    resize: none;
+    display: inline-block;
+    vertical-align: top;
+    padding: 5px;
+    font-size: 15px;
+}
+
+.personal-change label{
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0 15px 0 0;
+    text-align: center;
+}
+
+.personal-change span{
+    width: 80px;
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 18px;
+    letter-spacing: 2px;
+}
+
+.personal-data{
+    width: 70px;
+    margin: 0 10px 0 0;
+}
+
+.personal-address{
+    width: 150px;
+    margin: 1px 10px 0 0;
+    display: inline-block;
+    vertical-align: middle;
+    height: 20px;
+    text-indent: 3px;
+}
+
+.personal-save,
+.personal-alter{
+    background: #0c73c2;
+    color: white;
+}
+
+.personal-save:hover,
+.personal-alter:hover{
+    background: rgb(17,103,168);
+}
+
+.personal-cancel{
+    background: white;
+}
+
+.personal-cancel:hover{
+    background: #EFEFEF;
+}
+
+.personal-btn{
+    width: 100px;
+    height: 40px;
+    line-height: 40px;
+    margin: 20px 0 0 20px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    display: inline-block;
+    text-align: center;
+    vertical-align: top;
+}
+
+.personalLoad-title img{
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    margin:0 5px 0 15px;
+}
+
+.personalLoad-title{
+    width: 130px;
+    height: 70px;
+    font-size: 13px;
+    background: white;
+    display: inline-block;
+    margin: 30px 0;
+    vertical-align: top;
+    padding: 15px 0;
+}
+
+.personalLoad-title p{
+    font-size: 12px;
+    color: rgb(198,47,47);
+    margin: 10px 0 0 40px;
+    cursor: pointer;
+}
+
+.showDownload {
+    width: 1065px;
+    margin: 30px auto;
+    /*//子绝父相*/
+    position: relative;
+    padding: 13px;
+    height: 500px;
+    display: inline-block;
+    vertical-align: top;
+    font-size: 13px;
+    background:white;
+    overflow-y:auto;
+    overflow-x:hidden;
+}
+
+.showDownload .personalLoad-wrap{
+    bottom:-130px !important;
+}
+
+.item {
+    border: 1px solid #ccc;
+    padding: 4px;
+    position: absolute;
+    margin:10px;
+}
+
+.showDownload img{
+    width: 180px;
+}
+
+.personalLoad-msg{
+    width: 1047px;
+    height: 500px;
+    display: inline-block;
+    vertical-align: top;
+    margin: 30px 0 0 20px;
+    text-align: center;
+    font-size: 13px;
+}
+
+.personalLoad-wrap{
+    width: 1200px;
+    left: -155px;
+}
+
+.personalLoad-none{
+    width: 150px;
+    height: 150px;
+    margin: 130px 43% 20px;
+}
+
+.personalLoad-btn{
+    display: block;
+    width: 100px;
+    margin: 20px auto;
+    height: 35px;
+    line-height: 35px;
+    background: rgb(198,47,47);
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.personalUpload-content{
+    padding: 150px 0 0 0;
+    background: #f6f6f6;
+    height: 450px;
+    text-align: center;
+}
+
+.personalUpload-content p{
+    margin: 13px auto;
+}
+
+.personalUpload-text1{
+    color: black;
+    font-size: 18px;
+}
+
+.personalUpload-text2{
+    color: #999;
+    font-size: 13px;
+}
+
+.personalUpload-btn{
+    display: block;
+    width: 200px;
+    height: 50px;
+    margin: 0 auto;
+    line-height: 50px;
+    background: rgb(198,47,47);
+    color: white;
+    cursor: pointer;
+    border-radius: 3px;
+    text-align: center;
+    position: relative;
+    outline: none;
+    border: none;
+}
+
+.personalUpload-prompt{
+    display: inline-block;
+    margin:20px 5px 0;
+}
+
+.personalUpload-prompt img{
+    width: 25px;
+    height: 25px;
+    vertical-align: middle;
+    margin: -3px 0 0;
+}
+
+#edition{
+    background:#f6f6f6;
+}
+
+.headPhoto{
+    width: 100%;
+    height: 100%;
+}
+
+.personalChange-left{
+    display: inline-block;
+}
+
+.personalChange-right{
+    display: inline-block;
+    height: 200px;
+    width: 200px;
+    vertical-align: top;
+    margin: 80px 0 0 70px;
+    border:1px solid #e0e0e0;
+}
+
+.personalChange-btn{
+    width: 90px;
+    height: 30px;
+    border-radius: 5px;
+    border: 1px solid #e0e0e0;
+    font-size: 12px;
+    margin: 10px 55px;
+    cursor: pointer;
+    position: relative;
+}
+
+.personalAlter-content{
+    background: white;
+    min-width:1260px;
+    width:100%;
+    height: 100%;
+    position: relative;
+}
+
+.personalHead{
+    display: none;
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    margin: auto;
+    width: 500px;
+    height: 400px;
+    background: white;
+    box-shadow: 0 0 10px rgb(200,200,200);
+    z-index: 1;
+}
+
+.personalHead p{
+    height: 50px;
+    line-height: 50px;
+    margin: 0 10px;
+    position: relative;
+}
+
+.personalHead p::after{
+    bottom: 0;
+}
+
+.personalAlter-content::before,
+.personalHead-bottom::before{
+    top: 0;
+}
+
+.personalHead p::after,
+.personalHead-bottom::before{
+    content: "";
+    position: absolute;
+    width: 105%;
+    height: 1px;
+    left: -10px;
+    background: #e1e1e2;
+}
+
+.personalHead-bottom{
+    height: 50px;
+    line-height: 50px;
+    position: relative;
+    background: #f5f5f7;
+    padding: 0 150px;
+}
+
+.personalHead-close{
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    text-align: center;
+    font-size: 24px;
+    right: 5px;
+    top: 5px;
+    color: #666;
+    line-height: 25px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.personalHead-close:hover{
+    color: rgb(198,47,47);
+}
+
+.personalHead-main{
+    height: 300px;
+    padding: 15px 35px;
+}
+
+.headPicture{
+    display: inline-block;
+    width: 220px;
+    height: 270px;
+    border: 1px solid #e1e1e2;
+    background: #f5f5f7;
+    text-align: center;
+    position: relative;
+}
+
+.selectBox{
+    position: absolute;
+    left: 33px;
+    top: 58px;
+    width: 150px;
+    height: 150px;
+    border: 1px solid #666666;
+    cursor: move;
+    background: white;
+    opacity: .5;
+}
+
+.headPicture-title{
+    display: inline-block;
+    margin: 0 0 0 50px;
+    vertical-align: top;
+    font-size: 12px;
+}
+
+
+.headPicture-title .bigPicture{
+    width:150px;
+    height: 150px;
+    border: 1px solid #e1e1e2;
+    overflow: hidden;
+}
+
+
+.bigPicture-back{
+    width: 220px;
+    height: 270px;
+    background: #f5f5f7;
+    text-align: center;
+    line-height: 270px;
+    margin-left: -33px;
+    margin-top: -58px;
+}
+
+.bigPicture-back img,
+.headPicture img{
+    vertical-align: middle;
+}
+
+.headPicture-title span{
+    display: block;
+    margin-top: 10px;
+}
+
+.file,
+.backFile{
+    position:absolute;
+    opacity:0;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    z-index: 1;
+    cursor: pointer;
+}
+
+.personalHead-upload:hover{
+    background: #f5f5f7;
+}
+
+.personalHead-upload{
+    position: relative;
+    width: 90px;
+    height: 30px;
+    line-height: 30px;
+    border-radius: 5px;
+    border: 1px solid #e1e1e2;
+    background: white;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.personalHead-save:hover {
+    background: #1167A8;
+}
+
+.personalHead-save {
+    width: 90px;
+    height: 30px;
+    line-height: 30px;
+    border-radius: 5px;
+    border: 1px solid #e0e0e0;
+    font-size: 12px;
+    cursor: pointer;
+    background: #0C73C2;
+    color: white;
+    margin: 0 0 0 15px;
+    transition: 0.2s;
+}
+
+
+.common-over{
+    display: none;
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    background: rgba(255,255,255,1);
+    width: 300px;
+    height: 100px;
+    border-radius: 6px;
+    text-align: center;
+    padding: 30px 0 0;
+    color: rgb(198,47,47);
+    font-size: 24px;
+}
+
+.common-over img{
+    display: inline-block;
+    vertical-align: middle;
+    margin: -5px 20px 0 0;
+}

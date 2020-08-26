@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>火图网</title>
+    <link rel="shortcut icon" th:href="@{/img/logo.png}">
+    <link rel="stylesheet" th:href="@{/css/head.css}">
+    <link rel="stylesheet" th:href="@{/css/register.css}">
+    <script th:src="@{/js/myCode.js}"></script>
+    <script>
+        window.onload=function () {
+            getClass("user-msg")[0].onblur=function () {
+                var userName=this.value;
+                ajax({
+                    url:"verification",
+                    type:"post",
+                    data:{userName:userName},
+                    success:function (data) {
+                        getClass("register-prompt")[0].innerText=data;
+                    },
+                    error:function (data) {
+                        console.log(data);
+                    }
+                })
+            }
+        }
+    </script>
+</head>
+    <body>
+        <div id="head">
+        <div id="head-back">
+            <div id="header">
+                <div class="logo-text">
+                    <a th:href="@{/main/rotation}" style="color:rgb(198,47,47);">
+                        <img th:src="@{/img/logo.png}">
+                        <div class="logo">火图网</div>
+                        <div class="small-logo">提供专业图片服务</div>
+                    </a>
+                </div>
+                <div id="logo-way">
+                    <span class="logo-dot">·</span>
+                    <span class="logo-way-text">注册</span>
+                </div>
+                <div id="login">
+                    <div class="add"><a><img th:src="@{/img/sheng.png}"><p>更多服务 </p></a></div>
+                    <div class="add"><a><img th:src="@{/img/queen.png}"><p>加入Vip</p></a></div>
+                    <div class="user">
+                        <span class="user-way left">
+                            <a th:href="@{goLogin}">登录</a>
+                        </span>
+                        <span class="user-wrap">|</span>
+                        <span class="user-way right">
+                            <a th:href="@{goRegister}">注册</a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        <div id="mainContent">
+            <div class="register-main">
+                <div class="register-msg">
+                    <h1 class="register-topic">立即注册</h1>
+                    <form action="register" method="post"  class="register-input">
+                        <div class="register-content">
+                            <span class="register-icon">
+                                <img th:src="@{/img/head1.png}" alt="" style="width: 35px;height: 35px;top: 15px;left: 10px;">
+                            </span>
+                            <input type="text" class="user-msg" placeholder="用户名" required="required" name="userName">
+                        </div>
+                        <p class="register-prompt"></p>
+                        <div class="register-content">
+                            <span class="register-icon">
+                             <img th:src="@{/img/locat.png}" alt="">
+                        </span>
+                            <input type="text" class="user-msg" placeholder="密码" required="required" name="password">
+                        </div>
+                        <div class="register-content">
+                            <span class="register-icon">
+                                 <img th:src="@{/img/problem.png}" alt="">
+                            </span>
+                            <select class="user-msg" name="problemPassword">
+                                <option selected="selected">请选择密保问题</option>
+                                <option>你的父母亲姓名</option>
+                                <option>你的生日</option>
+                                <option>你是哪个初中毕业的</option>
+                                <option>最难忘的一件事</option>
+                                <option>配偶的姓名</option>
+                                <option>最喜欢的明星</option>
+                                <option>最喜欢的电影</option>
+                            </select>
+                        </div>
+                        <div class="register-content">
+                            <span class="register-icon">
+                             <img th:src="@{/img/key.png}" alt="">
+                        </span>
+                            <input type="text" class="user-msg" placeholder="密保" required="required" name="problemAnswer">
+                        </div>
+                        <input type="submit" class="register-btn" value="注册">
+                        <span class="to-login">
+                            已有账号？
+                            <a th:href="@{/account/goLogin}">立即登录</a>
+                        </span>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div id="edition">Copyright © 2020 火图网 版权所有</div>
+    </body>
+</html>

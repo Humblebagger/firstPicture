@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pw.dao.OrderMap">
+    <insert id="addOrders" parameterType="orders">
+   insert into pictures_web.orders
+   (id,uid,merchantOrderNumber,alipayTransactionNumber,paymentAmount) values
+   (null ,#{uid},#{merchantOrderNumber},#{alipayTransactionNumber},#{paymentAmount});
+     </insert>
+    <delete id="deleteOrders">
+        delete pictures_web.orders
+        from pictures_web.orders
+        where id = #{id}
+    </delete>
+
+    <update id="updateOrders" parameterType="orders">
+        update pictures_web.orders
+        <set>
+            <if test="uid!=null">uid=#{uid},</if>
+            <if test="merchantOrderNumber!=null">merchantOrderNumber=#{merchantOrderNumber},</if>
+            <if test="alipayTransactionNumber!=null">alipayTransactionNumber=#{alipayTransactionNumber},</if>
+            <if test="paymentAmount!=null">paymentAmount=#{paymentAmount},</if>
+        </set>
+        where id = #{id}
+    </update>
+    <select id="findOrders" resultType="orders">
+        select *
+        from pictures_web.orders
+        <where>
+            <if test="uid!=null">uid like '%${uid}%'</if>
+        </where>
+    </select>
+    <select id="findOrdersCount" resultType="int">
+        select count(*)
+        from pictures_web.orders
+    </select>
+</mapper>

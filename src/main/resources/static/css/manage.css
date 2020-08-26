@@ -1,0 +1,513 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    list-style: none;
+    outline: none;
+}
+
+input:-webkit-autofill {
+    box-shadow: 0 0 0 1000px rgb(241,241,241)  inset;
+    -webkit-text-fill-color: #000000;
+}
+
+#head,#header{
+    width: 100% !important;
+    min-width: 1260px;
+    background:rgb(198,47,47) !important;
+}
+
+.logo-text,.add{
+    color: white !important;
+}
+
+.main{
+    height: 571px;
+    min-width: 1260px;
+    background:rgb(244,244,244);
+}
+
+.list-back{
+    width: 240px;
+    height: 571px;
+    border-right:1px solid rgb(230,231,234);
+    position: absolute;
+    left: 0;
+}
+
+.list{
+    width: 240px;
+    height:571px;
+}
+
+.list-top{
+    height: 60px;
+    width: 240px;
+}
+
+.list-title{
+    position: relative;
+    width: 100%;
+    color:#666;
+    font-size: 14px;
+    height: 45px;
+    line-height: 45px;
+    cursor: pointer;
+    padding: 0 0 0 30px;
+    display: flex;
+    justify-content: space-between;
+    transition: 0.3s;
+}
+
+.list-title .arrow{
+    top: 15px;
+    left:-10px;
+}
+
+.list-title .before,
+.list-title .after{
+    position: absolute;
+    left: 0;
+    width: 5px;
+    height:0;
+    background:rgb(198,47,47);
+    content: "";
+    transition: 0.3s;
+}
+
+.list-title .after{
+    top: 20px;
+}
+
+.list-title .before{
+    bottom: 20px;
+}
+
+.list-title:hover,
+.list-title-active{
+    background-color: rgb(234, 234, 231);
+    color:black;
+}
+
+.list-title:hover .before,
+.list-title-active .before,
+.list-title-active .after,
+.list-title:hover .after{
+    height: 25px;
+}
+
+.list-title>span{
+    display: inline-block;
+}
+
+.content{
+    margin: 0 40px 50px 270px;
+    position: relative;
+    padding: 100px 0 0;
+}
+
+.container{
+    width: 800px;
+    margin: 0 auto;
+    color:#666;
+    background: rgb(241,241,241);
+}
+
+.common{
+    table-layout: fixed;
+    width:100%;
+    font-size: 14px;
+}
+
+.common tr{
+    text-align:center;
+    height: 40px;
+}
+
+.common tbody:last-child tr{
+    padding: 0 30px;
+}
+
+.common  td{
+    padding: 0 5px;
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+}
+
+.feedback  td{
+    padding: 0 5px;
+}
+
+.feedback .email{
+    width: 200px;
+}
+
+.feedback .feedMsg{
+    width: 250px;
+}
+
+.feedback .user-name{
+    width: 100px !important;
+}
+
+.feedback .pagination{
+    width: 200px !important;
+}
+
+.common .number,
+.common .sex{
+    height: 40px;
+    width:70px;
+}
+
+.common .user-name{
+    height: 40px;
+    width:150px;
+}
+
+.common .upload{
+    height: 40px;
+    width:70px;
+}
+
+.common .personality{
+    height: 40px;
+    width:250px;
+}
+
+.common .handle{
+    width: 200px;
+    transition: 0.2s;
+    cursor: pointer;
+}
+
+.pagination .common-add,
+.common .del,
+.common .alter{
+    width: 50px;
+    height: 25px;
+    line-height: 23px;
+    display: inline-block;
+    border: 1px solid;
+    transition: 0.2s;
+    cursor: pointer;
+    margin: 0 7px;
+}
+
+.common .del{
+    color: rgb(94,185,94);
+}
+
+.common .del:hover{
+    background:rgb(94,185,94);
+    color: white;
+    border-color:rgb(94,185,94);
+}
+
+.common .alter{
+    color:  rgb(123,135,141);
+}
+
+.common .alter:hover{
+    background: rgb(123,135,141);
+    color: white;
+    border-color: rgb(123,135,141);
+}
+
+.pagination .common-add{
+    color: rgb(198,47,47);
+}
+
+.pagination .common-add:hover{
+    background: rgb(198,47,47);
+    color: white;
+    border-color: rgb(198,47,47);
+}
+
+.pagination{
+    font-size: 13px;
+    float: left;
+    display: flex;
+    justify-content: space-around;
+    height: 40px;
+    line-height: 40px;
+}
+
+.pagination{
+    padding: 7px 0;
+    width: 300px;
+    margin-right: 30px;
+    float: right;
+}
+
+.pagination li{
+    width: 30px;
+    height: 25px;
+    line-height: 25px;
+    cursor: pointer;
+}
+
+.pageActive{
+    color: white !important;
+    background: rgb(198,47,47);
+}
+
+.add-dropdown{
+    background: rgb(244,244,244);
+    position: absolute;
+    width: 80px;
+    top: 55px;
+    left: -8px;
+    z-index: 1;
+    border: 1px solid rgb(230,231,234);
+    box-shadow: 0px 5px 10px rgb(232,232,232);
+    border-top: none;
+}
+
+.add-dropdown img{
+    display: inline-block;
+    vertical-align:bottom;
+    width: 20px;
+    margin: 0 5px;
+}
+
+.add-dropdown .add-dropdown-title{
+    margin: 5px 0 5px 10px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: .2s;
+    display: block;
+    color:#666;
+}
+
+.add-dropdown .add-dropdown-title:hover{
+    color: rgb(198,47,47);
+}
+
+.add-dropdown .add-dropdown-wrap{
+    content: "";
+    height: 1px;
+    background: rgb(230,231,234);
+    margin: 0 10px;
+    display: block;
+}
+
+.add-dropdown::before{
+    position: absolute;
+    border: 7px solid;
+    content: "";
+    top: -14px;
+    left: 28px;
+    border-color: transparent  transparent rgb(244,244,244);
+}
+
+.change-common,
+.add-common{
+    display: none;
+    position: absolute;
+    background:rgba(0,0,0,.7);
+    width: 100%;
+    height: 100%;
+    min-width: 1260px;
+    min-height: 696px;
+    top: 0;
+    left: 0;
+}
+
+.add-common-msg,
+.change-common-msg{
+    width: 450px;
+    height: 430px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    text-align: center;
+    bottom: 0;
+    margin: auto;
+    background: rgb(245,245,247);
+    padding:50px;
+}
+
+.add-common-msg h2,
+.change-common-msg h2{
+    color: rgb(198,47,47);
+}
+
+.add-common-msg div,
+.change-common-msg div{
+    border: 1px solid #000;
+    margin: 20px;
+    position: relative;
+}
+
+.change-input span,
+.change-sex span,
+.add-input span{
+    display: inline-block;
+    text-align: center;
+    width: 80px;
+    border-right: 1px solid #666;
+    height: 39px;
+    line-height: 40px;
+}
+
+.add-input input,
+.change-input input,
+#selectSex{
+    display: inline-block;
+    vertical-align: top;
+    height: 35px;
+    width: 215px;
+    border: none;
+    background: rgb(245,245,247);
+    font-size: 15px;
+    margin: 2px 0 0;
+    text-indent: 5px;
+}
+
+.add-common-btn,
+.change-common-btn{
+    width: 152px;
+    height: 38px;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    color:rgb(250,250,250);
+}
+
+.add-confirm,
+.change-confirm{
+    background: rgb(215,50,50);
+}
+
+.reset{
+    background: rgb(230,231,234);
+    color: #666;
+}
+
+.add-common-close,
+.change-common-close{
+    position: absolute;
+    right: 25px;
+    top: 6px;
+    font-size: 35px;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.add-common-close:hover,
+.change-common-close:hover{
+    color: rgb(198,47,47);
+}
+
+.common .common-id{
+    opacity: 0;
+    position: absolute;
+}
+
+.common .common-ranking{
+    position: absolute;
+    width: 70px;
+    height: 40px;
+    line-height: 40px;
+}
+
+.common-over{
+    display: none;
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    background: rgba(255,255,255,1);
+    width: 300px;
+    height: 100px;
+    border-radius: 6px;
+    text-align: center;
+    padding: 30px 0 0;
+    color: rgb(198,47,47);
+    font-size: 24px;
+}
+
+.common-over img{
+    display: inline-block;
+    vertical-align: middle;
+    margin: -5px 20px 0 0;
+}
+
+.isInput{
+    position: absolute;
+    opciaty:0;
+}
+
+.add-problem{
+    width: 215px;
+    height: 36px;
+    border: none;
+    background: #f5f5f7;
+}
+
+
+.change-confirmPrompt,
+.change-uploadTimesPrompt,
+.add-confirmPrompt{
+    position: absolute;
+    left: 28%;
+    font-size: 11px;
+    color: #d73232;
+    bottom: -15px;
+}
+
+.pagination-input{
+    width: 25px;
+    text-align: center;
+}
+
+.pre a,
+.next a{
+    display: inline-block;
+    border-width: 9px 13px 9px;
+    border-style: solid;
+}
+
+.pre a{
+    border-color: transparent #999 transparent transparent;
+    margin: 4px 5px 0 0;
+}
+
+.next a{
+    border-color: transparent  transparent transparent #999;
+    margin: 4px 0 0 5px;
+}
+
+.search{
+    width: 300px;
+    height: 35px;
+    margin: 10px 0 10px 10px;
+    background: #efefef;
+    border: 1px solid #c1c1c1;
+    text-indent: 15px;
+}
+
+.search-btn{
+    width: 60px;
+    height: 35px;
+    line-height: 35px;
+    margin-top: 10px;
+    background: rgb(198,47,47);
+    outline: none;
+    border: 1px solid #c1c1c1;
+    color: white;
+    vertical-align: top;
+}
+
+.search-prompt a{
+    position: absolute;
+    font-size: 11px;
+    bottom: -5px;
+    color: rgb(198,47,47);
+    left: 10px;
+}

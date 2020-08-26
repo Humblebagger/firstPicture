@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>火图网</title>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+    <!-- Favicon-->
+    <link rel="shortcut icon" th:href="@{/img/1.png}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/izmir.css}" />
+</head>
+<body>
+<!----导航栏----->
+<div class="top">
+    <div class="bigbox">
+        <a href="rotation">
+        <div class="top-right">
+            <img th:src="@{/img/1.png}">
+            <div class="logo">火图网</div>
+            <div id="small-logo">专业图片服务</div></a>
+        </div>
+
+        <div class="top-middle">
+            <form th:action="search" method="get">
+                <input class="field" type="text" name="name" />
+                <input class="fields" type="submit" values="搜素" />
+            </form>
+        </div>
+
+        <div class="top-left">
+            <div class="add"><a><img th:src="@{/img/3.png}">
+                <p>更多服务 </p>
+            </a></div>
+            <div class="add"><a><img th:src="@{/img/4.png}">
+                <p>加入Vip</p>
+            </a></div>
+            <div class="user">
+                <div th:if="${session.Account}==null">
+                    <a style="color: #E60026;text-decoration: none" th:href="@{/account/goLogin}">登录</a>|<a style="color: #E60026;text-decoration: none" th:href="@{/account/goRegister}">注册</a>
+                </div>
+                <div th:if="${session.Account}!=null">
+                    <a style="color: #E60026;text-decoration: none;font-size: 10px" th:href="@{/accountPersonal/goMyCenter}"><img th:src="'http://wxsaxaxa.icu/'+${session.Account.headPortrait}" width="30px" style="border-radius: 50%"></a>
+                    <a style="color: #E60026;text-decoration: none;font-size: 10px" th:href="@{/accountPersonal/goOut}">退出</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!---分类---->
+<div class="first">
+    <div class="bigbox">
+        <div><a href="rotation" id="special">发现<div id="strip"></div></a></div>
+        <div><a th:href="@{/main/category?lb=shsh}">社会生活</a></div>
+        <div><a th:href="@{/main/category?lb=cygg}">创意广告</a></div>
+        <div><a th:href="@{/main/category?lb=zrfj}">自然风景</a></div>
+        <div><a th:href="@{/main/category?lb=syys}">摄影艺术</a></div>
+        <div><a th:href="@{/main/category?lb=ktty}">卡通涂鸦</a></div>
+        <div><a th:href="@{/main/category?lb=kxbj}">酷炫背景</a></div>
+        <div><a th:href="@{/main/category?lb=swbg}">商务办公</a></div>
+        <div><a th:href="@{/main/category?lb=ysmx}">影视明星</a></div>
+    </div>
+</div>
+
+    <div class="bigbox">
+        <div class="box">
+            <div th:each="search:${search}">
+                <a th:href="@{'/main/goInformationL?id='+${search.id}}"> <img th:src="'http://wxsaxaxa.icu/'+${search.position}" alt=""></a>
+            </div><div style="position: absolute;bottom: 0;left: 36%">
+            <li style="position: relative;float: left;list-style: none;margin: 10px"  th:if="${num} !=1"><a th:href="@{search?upDown=down}">«</a></li>
+
+            <ul class="pagination" th:each="page1:${page}">
+                     <li><a th:class="${page1==num}?'active'" th:href="'search?page=' + ${page1}" th:text="${page1}"></a></li>
+            </ul>
+            <li style="position: relative;float: left;list-style: none;margin:10px" th:if="${num}!=${max}" ><a th:href="@{search?upDown=up}" >»</a></li>
+        </div>
+    </div></div>
+<div class="bigbox">
+    <div id="ban">
+        <h2 style="margin-left: 2%;">相关专题</h2>
+        <ul>
+            <a th:href="@{/main/category?lb=shsh}">
+            <li class="col-item">
+                <figure class="c4-izmir c4-border-cc-2" tabindex="0">
+                    <img th:src="@{/img/11.jpg}">
+                    <figcaption>
+                        <p>社会生活</p>
+                    </figcaption>
+                </figure>
+            </li>
+            </a>
+            <a th:href="@{/main/category?lb=cygg}">
+            <li class="col-item">
+                <figure class="c4-izmir c4-border-cc-2" tabindex="0">
+                    <img th:src="@{/img/12.jpg}">
+                    <figcaption>
+                        <p>创意广告</p>
+                    </figcaption>
+                </figure>
+            </li>
+            </a>
+                <a th:href="@{/main/category?lb=zrfj}">
+            <li class="col-item">
+                <figure class="c4-izmir c4-border-cc-2" tabindex="0">
+                    <img th:src="@{/img/13.jpg}">
+                    <figcaption><p>自然风景</p>
+                    </figcaption>
+                </figure>
+            </li>
+                </a>
+            <a th:href="@{/main/category?lb=ysys}">
+            <li class="col-item">
+                <figure class="c4-izmir c4-border-cc-2" tabindex="0">
+                    <img th:src="@{/img/14.jpg}">
+                    <figcaption><p>摄影艺术</p>
+                    </figcaption>
+
+                </figure>
+            </li>
+            </a>
+                <a th:href="@{/main/category?lb=ktty}">
+            <li class="col-item">
+                <figure class="c4-izmir c4-border-cc-2" tabindex="0">
+                    <img th:src="@{/img/15.jpg}">
+                    <figcaption><p>卡通涂鸦</p>
+                    </figcaption>
+                </figure>
+            </li>
+                </a>
+            <a th:href="@{/main/category?lb=kxbj}">
+            <li class="col-item">
+                <figure class="c4-izmir c4-border-cc-2" tabindex="0">
+                    <img th:src="@{/img/16.jpg}">
+                    <figcaption><p>炫酷背景</p>
+                    </figcaption>
+                </figure>
+            </li>
+            </a>
+            <a th:href="@{/main/category?lb=swbg}">
+            <li class="col-item">
+                <figure class="c4-izmir c4-border-cc-2" tabindex="0">
+                    <img th:src="@{/img/17.jpg}">
+                    <figcaption><p>商务办公</p>
+                    </figcaption>
+                </figure>
+            </li>
+            </a>
+                <a th:href="@{/main/category?lb=ysmx}">
+            <li class="col-item">
+                <figure class="c4-izmir c4-border-cc-2" tabindex="0">
+                    <img th:src="@{/img/18.jpg}">
+                    <figcaption><p>影视明星</p>
+                    </figcaption>
+                </figure>
+            </li>
+                </a>
+        </ul>
+    </div>
+</div>
+
+<div class="axial">
+    <div class="bigbox">
+        <div class="top-right" style="left: 100px;top: 50px;">
+            <img th:src="@{/img/1.png}">
+            <div class="logo">火图网</div>
+            <div id="small-logo">专业图片服务</div>
+        </div>
+        <img th:src="@{/img/99.jpg}" width="200px" height="auto" style="position: relative;top: 150px;left: -40px;">
+        <div class="f1" style="position: relative;float: right; right: 200px;top: 150px;">
+            <h4>常见问题</h4>
+            <p><a>成为签约设计师</a></p>
+            <p><a>注册登录</a></p>
+            <p><a>账号/密码</a></p>
+            <p><a>发票/售后</a></p>
+            <p><a>版权投诉</a></p>
+        </div>
+        <div class="f1" style="position: relative;float: right;right: 200px;top: 150px;">
+            <h4>关于火图网</h4>
+            <p><a>关于我们</a></p>
+            <p><a>加入我们</a></p>
+            <p><a>心系火图</a></p>
+            <p><a>Q群联盟</a></p>
+        </div>
+    </div>
+</div>
+<style>
+    .box{
+        width: 100%;
+        height:2000px;
+        background: white;
+        position: relative;
+        margin-top: 50px;
+    }
+    .box img{
+        margin: 15px;
+        height: 290px;
+        width: 22.5%;
+        position: relative;
+        float: left;
+    }
+    ul.pagination {
+        display: inline-block;
+        padding: 0;
+        margin: 0;
+        position: relative;
+        float: left;
+
+
+    }
+
+    ul.pagination li {display:inline-block;
+    list-style: none}
+
+    ul.pagination li a {
+        color: black;
+        float: left;
+        padding: 8px 16px;
+        text-decoration: none;
+        border-radius: 5px;
+        display:inline-block;
+    }
+
+
+    ul.pagination li a.active {
+        background-color: red;
+        color: white;
+        border-radius: 5px;
+    }
+    ul.pagination li a:hover:not(.active) {background-color: #DDDDDD;}
+    #ban {
+        width: 1050px;
+        height: 300px;
+        position:relative;
+        overflow: hidden;
+        margin: 0 0 4% 2%;
+    }
+
+    #ban ul {
+        position: relative;
+        left: 10px;
+        top: 20px;
+
+    }
+
+    #ban ul li {
+        float: left;
+        width: 300px;
+        height: 180px;
+        list-style: none;
+        text-align: center;
+        margin: 25px;
+        border-radius: 5%;
+    }
+
+    #ban ul li img {
+        height: 180px;
+        width: 300px;
+        border-radius: 5%;
+    }
+    .axial {
+        width: 100%;
+        height: 420px;
+        position: relative;
+        background: url(../static/img/download.svg) no-repeat center;
+        background-color: #2E3139;
+    }
+</style>
+<script>
+    //无缝滚动
+    var oDiv = document.getElementById('ban');
+    var oUl = oDiv.getElementsByTagName('ul')[0];
+    var aLi = oUl.getElementsByTagName('li');
+
+    oUl.innerHTML = oUl.innerHTML + oUl.innerHTML;
+    oUl.style.width = aLi[0].offsetWidth * aLi.length + 'px';
+
+    function move() {
+        if (oUl.offsetLeft < -oUl.offsetWidth / 2) {
+            oUl.style.left = '0';
+        }
+        if (oUl.offsetLeft > 0) {
+            oUl.style.left = -oUl.offsetLeft / 2 + 'px';
+        }
+        oUl.style.left = oUl.offsetLeft - 1 + 'px';
+    }
+
+    var timer = setInterval(move, 20);
+    oDiv.onmouseover = function () {
+        clearInterval(timer);
+    };
+
+    oDiv.onmouseout = function () {
+        timer = setInterval(move, 20);
+    };
+</script>
+</body>
+</html>

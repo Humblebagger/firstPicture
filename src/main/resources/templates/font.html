@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>火图网</title>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+    <link href="https://fonts.font.im/css?family=Hanalei+Fill" rel="stylesheet">
+    <!-- Favicon-->
+    <link rel="shortcut icon" th:href="@{/img/1.png}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}"/>
+<script th:href="@{/js/main.js}"></script>
+</head>
+<body>
+
+<div id="stick" style="display:none;"><a>
+    <i class="fa fa-angle-double-up" aria-hidden="true"></i>
+    <p>置顶</p>
+</a></div>
+</div>
+<!----导航栏----->
+<div class="top">
+    <div class="bigbox">
+        <a href="rotation">
+        <div class="top-right">
+            <img th:src="@{/img/1.png}">
+            <div class="logo">火图网</div>
+            <div id="small-logo">专业图片服务</div>
+        </div></a>
+
+        <div class="top-middle">
+            <form th:action="search" method="get">
+                <input class="field" type="text" name="name" />
+                <input class="fields" type="submit" values="搜素" />
+            </form>
+        </div>
+
+        <div class="top-left">
+            <div class="add"><a><img th:src="@{/img/3.png}">
+                <p>更多服务 </p>
+            </a></div>
+            <div class="add"><a><img th:src="@{/img/4.png}">
+                <p>加入Vip</p>
+            </a></div>
+            <div class="user"> <div th:if="${session.Account}==null">
+                <a style="color: #E60026;text-decoration: none" th:href="@{/account/goLogin}">登录</a>|<a style="color: #E60026;text-decoration: none" th:href="@{/account/goRegister}">注册</a>
+            </div>
+                <div th:if="${session.Account}!=null">
+                    <a style="color: #E60026;text-decoration: none;font-size: 10px" th:href="@{/accountPersonal/goMyCenter}"><img th:src="'http://qdma85cm1.bkt.clouddn.com/'+${session.Account.headPortrait}" width="30px" style="border-radius: 50%"></a>
+                    <a style="color: #E60026;text-decoration: none;font-size: 10px" th:href="@{/accountPersonal/goOut}">退出</a>
+                </div></div>
+        </div>
+    </div>
+</div>
+<div class="bigbox">
+    <div class="frist-box">
+        <div th:each="picture:${picture}">
+            <img th:src="'http://wxsaxaxa.icu/'+${picture.position}">
+            <p th:text="${picture.description}"></p>
+        </div>
+    </div>
+    <div class="second-box">
+        <div class="art">
+            <h2>创意周报</h2>
+            <h4>有限的容量,无限的传播! 海报相当于图片广告，是中国户外广告的开端!</h4>
+            <p>作者：火图网</p>
+        </div>
+        <div class="act">
+            <a th:href="@{goDetailed?name=1}" th:style="${active=='1'}?'display:none'"><span class="enUjzm" >创意</span></a>
+            <a th:href="@{goDetailed?name=2}" th:style="${active=='2'}?'display:none'"><span class="enUjzm" >配色</span></a>
+            <a th:href="@{goDetailed?name=3}" th:style="${active=='3'}?'display:none'"><span class="enUjzm" >插画</span></a>
+            <a th:href="@{goDetailed?name=4}" th:style="${active=='4'}?'display:none'"><span class="enUjzm" >潮流</span></a>
+            <a th:href="@{goDetailed?name=5}" th:style="${active=='5'}?'display:none'"><span class="enUjzm" >夏天</span></a>
+            <a th:href="@{goDetailed?name=6}" th:style="${active=='6'}?'display:none'"><span class="enUjzm" >酷炫</span></a>
+        </div>
+    </div>
+</div>
+
+<style>
+
+    .frist-box {
+        width: 60%;
+        height: 1200px;
+        background: white;
+        position: relative;
+        top: 50px;
+        margin: 0 2%;
+        padding: 40px;
+    }
+    .frist-box img{
+        width: 70%;
+        height: 300px;
+        margin-left:16%;
+    }
+    .frist-box p{
+        font-size: 14px;
+        font-family:"Times New Roman",Times,serif;
+        text-indent:2em;
+        letter-spacing: 2px;
+        width: 85%;
+        margin-left: 8%;
+
+    }
+    .second-box {
+        width: 19%;
+        height: 440px;
+        position: fixed;
+        left: 66%;
+        background: white;
+        top: 115px;
+    }
+
+    .art {
+        padding: 20px;
+        height: 180px;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .art h4 {
+        letter-spacing: 2px;
+        font-weight: 500;
+        margin: 20px 0;
+    }
+
+    .art p {
+        color: #888888;
+        font-size: 14x;
+    }
+
+    .act {
+        padding: 10px 20px;
+    }
+
+    .enUjzm {
+        background: rgb(240, 244, 245);
+        color: rgb(31, 31, 31);
+        padding: 8px 16px 8px 20px;
+        line-height: 22px;
+        transition: color 0.3s ease 0s;
+        position: relative;
+        border-radius: 100px 0px 0px 100px;
+        height: 22px;
+        margin: 15px;
+        float: left;
+    }
+
+    span:hover {
+        color: #E60026;
+        cursor: pointer;
+    }
+
+</style>
+</body>
+</html>

@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+    <!-- Favicon-->
+    <link rel="shortcut icon" th:href="@{/img/1.png}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/izmir.css}"/>
+</head>
+<body>
+<div class="top">
+    <div class="bigbox">
+        <div class="top-right">
+            <a href="rotation">
+                <img src="../static/img/1.png">
+                <div class="logo">火图网</div>
+                <div id="small-logo">专业图片服务</div>
+            </a>
+        </div>
+
+        <div class="top-middle">
+            <input class="field" placeholder="  每日免费设计素材任意下载"/>
+            <button class="fields"><i class="fa fa-search" aria-hidden="true"></i></button>
+        </div>
+
+        <div class="top-left">
+            <div class="add"><a><img src="../static/img/3.png">
+                <p>更多服务 </p>
+            </a></div>
+            <div class="add"><a><img src="../static/img/4.png">
+                <p>加入Vip</p>
+            </a></div>
+            <div class="user"><a>登录</a>|<a>注册</a></div>
+        </div>
+    </div>
+</div>
+<!---分类---->
+
+<div id="contain">
+    <div class="bigbox">
+        <div id="special"><a th:href="@{/main/rotation}">首页
+            <div id="strip"></div>
+        </a></div>
+        <li index="0"><a th:class="${lb=='shsh'}?'active'" th:href="@{/main/category?lb=shsh}">社会生活</a></li>
+        <li index="1"><a th:class="${lb=='cygg'}?'active'" th:href="@{/main/category?lb=cygg}">创意广告</a></li>
+        <li index="2"><a th:class="${lb=='zrfj'}?'active'" th:href="@{/main/category?lb=zrfj}">自然风景</a></li>
+        <li index="3"><a th:class="${lb=='syys'}?'active'" th:href="@{/main/category?lb=syys}">摄影艺术</a></li>
+        <li index="4"><a th:class="${lb=='ktty'}?'active'" th:href="@{/main/category?lb=ktty}">卡通涂鸦</a></li>
+        <li index="5"><a th:class="${lb=='kxbj'}?'active'" th:href="@{/main/category?lb=kxbj}">酷炫背景</a></li>
+        <li index="6"><a th:class="${lb=='swbg'}?'active'" th:href="@{/main/category?lb=swbg}">商务办公</a></li>
+        <li index="7"><a th:class="${lb=='ysmx'}?'active'" th:href="@{/main/category?lb=ysmx}">影视明星</a></li>
+    </div>
+
+    <div class="bigbox">
+        <div class="magic" th:style="${lb=='shsh'}?'display: block;'">
+
+            <div class="box" th:each="shsh:${shsh}">
+                <div class="pic">
+                    <img th:src="'http://qdma85cm1.bkt.clouddn.com/'+${shsh.position}" alt="">
+                </div>
+            </div>
+        </div>
+        <div class="magic" th:style="${lb=='cygg'}?'display: block;'">
+            <h2 style="margin-left: 4%;">相关图集</h2>
+            <div class="box" th:each="cygg:${cygg}">
+                <div class="pic">
+                    <img th:src="'http://qdma85cm1.bkt.clouddn.com/'+${cygg.position}" alt="">
+                </div>
+            </div>
+        </div>
+        <div class="magic" th:style="${lb=='zrfj'}?'display: block;'">
+            <h2 style="margin-left: 4%;">相关图集</h2>
+            <div class="box" th:each="zrfj:${zrfj}">
+                <div class="pic">
+                    <img th:src="'http://qdma85cm1.bkt.clouddn.com/'+${zrfj.position}" alt="">
+                </div>
+            </div>
+        </div>
+        <div class="magic" th:style="${lb=='syys'}?'display: block;'">
+            <h2 style="margin-left: 4%;">相关图集</h2>
+            <div class="box" th:each="syys:${syys}">
+                <div class="pic">
+                    <img th:src="'http://qdma85cm1.bkt.clouddn.com/'+${syys.position}" alt="">
+                </div>
+            </div>
+        </div>
+        <div class="magic" th:style="${lb=='ktty'}?'display: block;'">
+            <h2 style="margin-left: 4%;">相关图集</h2>
+            <div class="box" th:each="ktty:${ktty}">
+                <div class="pic">
+                    <img th:src="'http://qdma85cm1.bkt.clouddn.com/'+${ktty.position}" alt="">
+                </div>
+            </div>
+        </div>
+        <div class="magic" th:style="${lb=='kxbj'}?'display: block;'">
+            <h2 style="margin-left: 4%;">相关图集</h2>
+            <div class="box" th:each="kxbj:${kxbj}">
+                <div class="pic">
+                    <img th:src="'http://qdma85cm1.bkt.clouddn.com/'+${kxbj.position}" alt="">
+                </div>
+            </div>
+        </div>
+        <div class="magic" th:style="${lb=='swbg'}?'display: block;'">
+            <h2 style="margin-left: 4%;">相关图集</h2>
+            <div class="box" th:each="swbg:${swbg}">
+                <div class="pic">
+                    <img th:src="'http://qdma85cm1.bkt.clouddn.com/'+${swbg.position}" alt="">
+                </div>
+            </div>
+        </div>
+
+        <div class="magic" th:style="${lb=='ysmx'}?'display: block;'">
+            <h2 style="margin-left: 4%;">相关图集</h2>
+            <div class="box" th:each="ysmx:${ysmx}">
+                <div class="pic">
+                    <img th:src="'http://qdma85cm1.bkt.clouddn.com/'+${ysmx.position}" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <div class="bigbox">
+        <div id="banner">
+            <h2 style="margin-left: 2%;">相关专题</h2>
+            <ul>
+                <li class="col-item">
+                    <figure class="c4-izmir c4-border-cc-2" tabindex="0">
+                        <img src="../static/img/11.jpg">
+                        <figcaption>
+                        </figcaption>
+                    </figure>
+                </li>
+                <li class="col-item">
+                    <figure class="c4-izmir c4-border-cc-2" tabindex="0">
+                        <img src="../static/img/12.jpg">
+                        <figcaption>
+                        </figcaption>
+                    </figure>
+                </li>
+                <li class="col-item">
+                    <figure class="c4-izmir c4-border-cc-2" tabindex="0">
+                        <img src="../static/img/13.jpg">
+                        <figcaption>
+                        </figcaption>
+                    </figure>
+                </li>
+                <li class="col-item">
+                    <figure class="c4-izmir c4-border-cc-2" tabindex="0">
+                        <img src="../static/img/14.jpg">
+                        <figcaption>
+                        </figcaption>
+                    </figure>
+                </li>
+                <li class="col-item">
+                    <figure class="c4-izmir c4-border-cc-2" tabindex="0">
+                        <img src="../static/img/15.jpg">
+                        <figcaption>
+                        </figcaption>
+                    </figure>
+                </li>
+                <li class="col-item">
+                    <figure class="c4-izmir c4-border-cc-2" tabindex="0">
+                        <img src="../static/img/16.jpg">
+                        <figcaption>
+                        </figcaption>
+                    </figure>
+                </li>
+                <li class="col-item">
+                    <figure class="c4-izmir c4-border-cc-2" tabindex="0">
+                        <img src="../static/img/17.jpg">
+                        <figcaption>
+                        </figcaption>
+                    </figure>
+                </li>
+                <li class="col-item">
+                    <figure class="c4-izmir c4-border-cc-2" tabindex="0">
+                        <img src="../static/img/18.jpg">
+                        <figcaption>
+                        </figcaption>
+                    </figure>
+                </li>
+            </ul>
+        </div>
+    </div>
+<div class="axial">
+    <div class="bigbox"></div>
+</div>
+
+    <style>
+        .axial {
+            width: 100%;
+            height: 420px;
+            position: relative;
+            background: url(../static/img/download.svg) no-repeat center;
+            background-color: #2E3139;
+        }
+
+        .active {
+            background: #E60026;
+            color: white;
+        }
+
+        #strip {
+            height: 2px;
+            width: 30px;
+            background: #E60026;
+            float: left;
+            position: absolute;
+            bottom: 0;
+
+        }
+
+        .search {
+            width: 100%;
+            height: 40px;
+            border-bottom: 3px solid #FFFFFF;
+            position: relative;
+            top: 60px;
+        }
+
+        .search i {
+            color: #FFFFFF;
+        }
+
+        .search-box {
+            background: none;
+            width: 50%;
+            height: 36px;
+            border: none;
+            font-size: 18px;
+            outline: none;
+            color: lightgray;
+            position: relative;
+        }
+
+        .case div {
+            height: 36px;
+            margin: 80px 20px 0 0;
+            line-height: 36px;
+            align-content: center;
+            background: #6B7791;
+            position: relative;
+            float: left;
+            border-radius: 5px;
+            color: #FFFFFF;
+            padding-left: 8px;
+        }
+
+        .case i {
+            position: relative;
+            float: right;
+            margin-right: 5px;
+            line-height: 36px;
+        }
+
+        .case i:hover,
+        div:hover {
+            cursor: pointer;
+        }
+
+        #special {
+            color: #E60026;
+            margin-left: 16%;
+            color: black;
+            position: relative;
+            padding: 10px 12px;
+            list-style: none;
+            display: inline-block;
+            margin-bottom: 20px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .magic {
+            width: 100%;
+            height: 2050px;
+            display: none;
+            position: relative;
+            top: 20px;
+        }
+
+        #contain {
+            width: 100%;
+            height: 44px;
+            background-color: #FFFFFF;
+            position: relative;
+            border-top: 1px solid #ddd;
+        }
+
+        #contain li {
+            color: black;
+            position: relative;
+            padding: 10px 12px;
+            list-style: none;
+            display: inline-block;
+            margin-bottom: 20px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        #contain li:hover {
+            color: #E60026;
+        }
+
+        #banner {
+            width: 1050px;
+            height: 300px;
+            position: relative;
+            overflow: hidden;
+            top: 50px;
+            margin: 0 0 4% 2%;
+        }
+
+        #banner ul {
+            position: relative;
+            left: 10px;
+            top: 20px;
+
+        }
+
+        #banner ul li {
+            float: left;
+            width: 300px;
+            height: 180px;
+            list-style: none;
+            text-align: center;
+            margin: 25px;
+            border-radius: 5%;
+        }
+
+        #banner ul li img {
+            height: 180px;
+            width: 300px;
+            border-radius: 5%;
+        }
+
+        .box{float: left;padding: 4px;}
+        .pic{border: solid 1px black;padding: 4px;border-radius: 4px;}
+        .pic img{width: 200px;display: block;}
+    </style>
+    <script>
+        var oD = document.getElementById('contain');
+        var aBtn = oD.getElementsByTagName('li');
+        var aDiv = document.getElementsByClassName('magic');
+        for (var i = 0; i < aBtn.length; i++) {
+            aBtn[i].index = i;
+            aBtn[i].onclick = function () {
+
+
+                //this当前发生事件的元素
+                //alert(this.value);
+                for (var i = 0; i < aBtn.length; i++) {
+                    aBtn[i].className = '';
+                    aDiv[i].style.display = 'none';
+                }
+                this.className = 'active';
+                //alert(this.index);
+                aDiv[this.index].style.display = 'block';
+            };
+        }
+        //无缝滚动
+        var oDiv = document.getElementById('banner');
+        var oUl = oDiv.getElementsByTagName('ul')[0];
+        var aLi = oUl.getElementsByTagName('li');
+
+        oUl.innerHTML = oUl.innerHTML + oUl.innerHTML;
+        oUl.style.width = aLi[0].offsetWidth * aLi.length + 'px';
+
+        function move() {
+            if (oUl.offsetLeft < -oUl.offsetWidth / 2) {
+                oUl.style.left = '0';
+            }
+            if (oUl.offsetLeft > 0) {
+                oUl.style.left = -oUl.offsetLeft / 2 + 'px';
+            }
+            oUl.style.left = oUl.offsetLeft - 1 + 'px';
+        }
+
+        var timer = setInterval(move, 20);
+        oDiv.onmouseover = function () {
+            clearInterval(timer);
+        };
+
+        oDiv.onmouseout = function () {
+            timer = setInterval(move, 20);
+        };
+        onload = function(){
+            var wf = new WaterF();
+            wf.init();
+        }
+        //想要改变窗口时实时刷新，可以写上下边的代码↓↓↓↓
+        // onresize = function(){
+        //     var wf = new WaterF();
+        //     wf.init();
+        // }
+        class WaterF{
+            constructor(){
+                this.clientW = document.documentElement.clientWidth;
+                this.abox = document.querySelectorAll(".box");
+                this.cont = document.querySelector(".magic");
+            }
+            init(){
+                // 根据屏幕的宽度 / 任意一个结构的宽度，得到一行最大能放几个
+                this.maxNum = parseInt(this.clientW / this.abox[0].offsetWidth);
+                // 根据一行能放置的个数 * 任意一张图片的宽度，得到了大框的真正的宽
+                this.cont.style.width = this.maxNum * this.abox[0].offsetWidth + "px";
+
+                // 完善布局之后，开始区分第一行和后面的行
+                this.firstLine();
+                this.otherLine();
+            }
+            firstLine(){
+                // 第一行，获取所有元素的高度放在一个数组中，准备获取最小值
+                this.heightArr = [];
+                for(var i=0;i<this.maxNum;i++){
+                    this.heightArr.push(this.abox[i].offsetHeight);
+                }
+            }
+            otherLine(){
+                // 需要拿到后面行的所有元素
+                for(var i=this.maxNum;i<this.abox.length;i++){
+                    // 在拿到后面行的元素的时候，获取第一个行的最小值和最小值所在的索引
+                    // var min = Math.min(...this.heightArr);
+                    var min = getMin(this.heightArr);
+                    var minIndex = this.heightArr.indexOf(min);
+                    // 设置定位
+                    this.abox[i].style.position = "absolute";
+                    // 根据最小值设置top
+                    this.abox[i].style.top = min + "px";
+                    // 根据最小值的索引设置left
+                    this.abox[i].style.left = minIndex * this.abox[0].offsetWidth + "px";
+                    // 修改最小值为，原来的数据+当前新放置元素的高度
+                    this.heightArr[minIndex] = this.heightArr[minIndex] + this.abox[i].offsetHeight;
+
+                    // 剩下的交给循环
+                }
+            }
+        }
+
+        function getMin(arr){
+            var myarr = [];
+            for(var j=0;j<arr.length;j++){
+                myarr.push(arr[j]);
+            }
+            return myarr.sort((a,b)=>a-b)[0];
+        }
+    </script>
+</body>
+</html>

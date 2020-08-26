@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>火图网</title>
+    <link rel="shortcut icon" th:href="@{/img/logo.png}">
+    <link rel="stylesheet" th:href="@{/css/head.css}">
+    <link rel="stylesheet" th:href="@{/css/manage.css}">
+    <script type="text/javascript" th:src="@{/js/myCode.js}"></script>
+    <script type="text/javascript" th:src="@{/js/manage.js}"></script>
+</head>
+<body>
+    <div id="head">
+        <div id="head-back">
+            <div id="header">
+                <div class="logo-text">
+                    <img th:src="@{/img/hot-icon.png}">
+                    <div class="logo">火图网</div>
+                    <div class="small-logo">提供专业图片服务</div>
+                </div>
+                <div id="login">
+                    <div class="add">
+                        <img th:src="@{/img/elipse.png}"><p>更多服务 </p>
+                    </div>
+                    <div class="add-dropdown" style="display: none">
+                        <a th:href="@{/main/rotation}" class="add-dropdown-title"><img th:src="@{/img/house.png}" alt="">首页</a>
+                        <span class="add-dropdown-wrap"></span>
+                        <a th:href="@{/account/goLogin}" class="add-dropdown-title"><img th:src="@{/img/login.png}" alt="">登录</a>
+                        <span class="add-dropdown-wrap"></span>
+                        <a th:href="@{/account/goRegister}" class="add-dropdown-title"><img th:src="@{/img/register.png}" alt="">注册</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="manage-msg">
+        <div class="main">
+            <div class="list-back">
+                <div class="list">
+                    <a class="list-title list-title-active" th:href="@{goNoVip}">
+                        <span class="before"></span>
+                        <span>普通用户</span>
+                        <span class="after"></span>
+                    </a>
+                    <a class="list-title"  th:href="@{goVip}">
+                        <span class="before"></span>
+                        <span>  &nbsp;vip用户</span>
+                        <span class="after"></span>
+                    </a>
+                    <a class="list-title"   th:href="@{goAccountFeedback}">
+                        <span class="before "></span>
+                        <span>  用户反馈</span>
+                        <span class="after"></span>
+                    </a>
+                </div>
+            </div>
+            <div class="content">
+                <div class="container">
+                    <form action="nameSearch" method="get" style="position: relative;">
+                        <input type="text" th:value="${session.name}" name="name" class="search"/><input type="submit" class="search-btn"/>
+                        <div th:if="${session.name}!=null" class="search-prompt">
+                            <a href='nameSearch?name='+null>回到原数据</a>
+                        </div>
+                    </form>
+                    <table class="common" cellspacing="0" border="0">
+                        <thead>
+                        <tr>
+                            <th class="common-id"></th>
+                            <th class="number common-ranking"></th>
+                            <th class="user-name">用户名</th>
+                            <th class="sex">性别</th>
+                            <th class="personality">个性签名</th>
+                            <th class="upload">上传次数</th>
+                            <th class="handle">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="accountNoVip:${accountNoVip}" class="NoVip">
+                            <td th:text="${accountNoVip.id}" class="common-id"></td>
+                            <td th:text="${accountNoVip.ranking}" class="common-ranking"></td>
+                            <td th:text="${accountNoVip.userName}"></td>
+                            <td th:text="${accountNoVip.sex}"></td>
+                            <td th:text="${accountNoVip.personalSignature}" th:title="${accountNoVip.personalSignature}"></td>
+                            <td th:text="${accountNoVip.uploadTimes}"></td>
+                            <td>
+                                <span class='alter'>编辑</span>
+                                <a th:href="@{'deleteAccount?id='+${accountNoVip.id}}" class="del">删除</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="12">
+                                <ul class="pagination">
+                                    <li class="pre" th:if="${num}!=1">
+                                        <a th:href="@{'pageSearch?upDown='+'down'}"></a>
+                                     </li>
+                                    <li style="width: 100px;">
+                                        <form class="pageForm" action="pageSearch" method="get">
+                                            第
+                                            <input name="page" type="text" class="pagination-input" th:value="${num}">
+                                            页，共
+                                            <span th:text="${max}"></span>
+                                            页
+                                        </form>
+                                    </li>
+                                    <li th:if="${num!=max}" class="next">
+                                        <a th:href="@{'pageSearch?upDown='+'up'}"></a>
+                                    </li>
+                                    <span class="common-add">添加</span>
+                                </ul>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="change-common">
+        <form class="change-common-msg" method="post" action="updateAccount">
+            <h2>修改信息</h2>
+            <input type="hidden" name="id">
+            <div class="change-input">
+                <span>用户名</span>
+                <input type="text" name="userName" class="changeUser">
+                <p class="change-confirmPrompt"></p>
+            </div>
+            <div class="change-sex">
+                <span>性别</span>
+                <select name="sex" id="selectSex">
+                    <option value="男">男</option>
+                    <option value="女">女</option>
+                    <option value="保密">保密</option>
+                </select>
+            </div>
+            <div class="change-input">
+                <span>个性签名</span>
+                <input type="text" name="personalSignature">
+            </div>
+            <div class="change-input">
+                <span>上传次数</span>
+                <input type="text" name="uploadTimes" class="changeUploadTimes">
+                <p class="change-uploadTimesPrompt"></p>
+            </div>
+            <input type="submit" value="确定" id="submit" class="change-common-btn change-confirm">
+            <input type="reset" value="重置"  class="change-common-btn reset">
+            <span class="change-common-close">x</span>
+        </form>
+    </div>
+    <div class="add-common">
+        <form class="add-common-msg" action="addAccount" method="post">
+            <h2>增加信息</h2>
+            <div class="add-input">
+                <span>用户名</span>
+                <input type="text" name="userName" class="addUser" required="required">
+                <p class="add-confirmPrompt"></p>
+            </div>
+            <div class="add-input">
+                <span>密码</span>
+                <input type="password" name="password" required="required">
+            </div>
+            <div class="add-input">
+                <span>密保</span>
+                <select class="add-problem" name="problemPassword" required="required">
+                    <option selected="selected" style="display: none" disabled="disabled">请选择密保问题</option>
+                    <option>你的父母亲姓名</option>
+                    <option>你的生日</option>
+                    <option>你是哪个初中毕业的</option>
+                    <option>最难忘的一件事</option>
+                    <option>配偶的姓名</option>
+                    <option>最喜欢的明星</option>
+                    <option>最喜欢的电影</option>
+                </select>
+            </div>
+            <div class="add-input">
+                <span>答案</span>
+                <input type="text" name="problemAnswer" required="required">
+            </div>
+            <input type="submit" value="确定" id="addSubmit" class="add-common-btn add-confirm">
+            <input type="reset" value="重置"  class="add-common-btn reset">
+            <span class="add-common-close">x</span>
+        </form>
+    </div>
+    <div class="common-over"></div>
+    <span class="isInput" th:text="${isDelete}"></span>
+    <span class="isInput" th:text="${isAdd}"></span>
+    <span class="isInput" th:text="${isUpdate}"></span>
+    <div id="edition">Copyright © 2020 火图网 版权所有</div>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pw.dao.AccountMap">
+    <insert id="addAccount" parameterType="account">
+        insert into pictures_web.account(id,userName,password,sex,problemPassword,
+        problemAnswer,isVip,uploadTimes,headPortrait,personalSignature,background)
+        values (null,#{userName},#{password},#{sex},#{problemPassword},#{problemAnswer},#{isVip},#{uploadTimes},#{headPortrait},#{personalSignature},#{background});
+    </insert>
+    <delete id="deleteAccount">
+        delete pictures_web.account
+        from pictures_web.account
+        where id = #{id}
+    </delete>
+
+    <update id="updateAccount" parameterType="account">
+        update pictures_web.account
+        <set>
+            <if test="userName!=null">userName=#{userName},</if>
+            <if test="password!=null">password=#{password},</if>
+            <if test="sex!=null">sex=#{sex},</if>
+            <if test="problemPassword!=null">problemPassword=#{problemPassword},</if>
+            <if test="problemAnswer!=null">problemAnswer=#{problemAnswer},</if>
+            <if test="isVip!=null">isVip=#{isVip},</if>
+            <if test="uploadTimes!=null">uploadTimes=#{uploadTimes},</if>
+            <if test="headPortrait!=null">headPortrait=#{headPortrait},</if>
+            <if test="personalSignature!=null">personalSignature=#{personalSignature},</if>
+            <if test="ranking!=null">ranking=#{ranking},</if>
+            <if test="birthday!=null">birthday=#{birthday},</if>
+            <if test="bigPosition!=null">bigPosition=#{bigPosition},</if>
+            <if test="smallPosition!=null">smallPosition=#{smallPosition},</if>
+            <if test="background!=null">background=#{background},</if>
+        </set>
+        where id = #{id}
+    </update>
+    <select id="login" resultType="account">
+        select *
+        from pictures_web.account
+        <where>
+            <if test="userName!=null">userName = #{userName}</if>
+            <if test="password!=null">AND password like #{password}</if>
+        </where>
+    </select>
+    <select id="findAllAccount" resultType="account" parameterType="map">
+        select * from pictures_web.account
+        <where>
+            <if test="userName != null">
+                AND userName like '%${userName}%'
+            </if>
+            <if test="isVip != null">
+                AND isVip = #{isVip}
+            </if>
+        </where>
+        limit #{start},#{pageSize}
+    </select>
+    <select id="findAccountCount" resultType="int" parameterType="map">
+    select count(*)
+    from pictures_web.account
+        <where>
+            <if test="userName != null">
+                AND userName like '%${userName}%'
+            </if>
+            <if test="isVip != null">
+                AND isVip = #{isVip}
+            </if>
+        </where>
+    </select>
+    <select id="findAccount" resultType="account">
+    select *
+    from pictures_web.account where id = #{id}
+    </select>
+</mapper>

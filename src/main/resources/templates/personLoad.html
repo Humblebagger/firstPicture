@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>火图网</title>
+    <link rel="shortcut icon" th:href="@{/img/logo.png}">
+    <link rel="stylesheet" th:href="@{/css/head.css}">
+    <link rel="stylesheet" th:href="@{/css/personCenter.css}">
+    <script th:src="@{/js/myCode.js}"></script>
+    <script th:src="@{/js/personalCenter.js}"></script>
+    <script th:src="@{/js/personalLoad.js}"></script>
+</head>
+<body>
+    <div th:insert="personal::head"></div>
+    <div class="main">
+        <div class="main-head">
+            <a  th:href="@{/accountPersonal/goMyCenter}">
+                个人资料
+                <span class="wrap"></span>
+            </a>
+            <a class="main-active" th:href="@{/accountPersonal/goMyDownload}">
+                我的下载
+                <span class="wrap"></span>
+            </a>
+            <a th:href="@{/accountPersonal/goMyCollection}">
+                我的收藏
+                <span class="wrap"></span>
+            </a>
+            <a th:href="@{/accountPersonal/goMyUpload}">
+                开始创作
+                <span class="wrap"></span>
+            </a>
+        </div>
+    </div>
+    <div class="personal-back">
+        <div class="personalLoad-title">
+            <img src="../static/img/load.png" alt="">下载
+            <p>我的下载</p>
+        </div>
+        <div th:if="${has}!=0" class="showDownload">
+            <div th:each="accountDownload:${accountDownload}" class="item">
+                <img th:src="'http://wxsaxaxa.icu/'+${accountDownload.picturePosition}" alt=""/>
+            </div>
+        </div>
+        <div th:if="${has}==0"  class="personalLoad-msg">
+            <img src="../static/img/noneBox.png" alt="" class="personalLoad-none">
+            <p>你还没有任何下载作品</p>
+            <a th:href="@{/main/rotation}" class="personalLoad-btn">开始下载</a>
+        </div>
+        <span class="personalLoad-wrap" style="bottom: 0;left: 34px;"></span>
+    </div>
+    <div th:insert="personal::edition"></div>
+</body>
+</html>

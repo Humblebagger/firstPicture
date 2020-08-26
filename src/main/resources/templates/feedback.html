@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en"   xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>火图网</title>
+    <link rel="shortcut icon" th:href="@{/img/logo.png}">
+    <link rel="stylesheet" th:href="@{/css/head.css}">
+    <link rel="stylesheet" th:href="@{/css/manage.css}">
+    <script th:src="@{/js/myCode.js}"></script>
+    <script type="text/javascript" th:src="@{/js/feedback.js}"></script>
+</head>
+<body>
+    <div id="head">
+        <div id="head-back">
+            <div id="header">
+                <div class="logo-text">
+                    <img th:src="@{/img/hot-icon.png}">
+                    <div class="logo">火图网</div>
+                    <div class="small-logo">提供专业图片服务</div>
+                </div>
+                <div id="login">
+                    <div class="add">
+                        <img th:src="@{/img/elipse.png}"><p>更多服务 </p>
+                    </div>
+                    <div class="add-dropdown" style="display: none">
+                        <a th:href="@{/main/rotation}" class="add-dropdown-title"><img th:src="@{/img/house.png}" alt="">首页</a>
+                        <span class="add-dropdown-wrap"></span>
+                        <a th:href="@{/account/goLogin}" class="add-dropdown-title"><img th:src="@{/img/login.png}" alt="">登录</a>
+                        <span class="add-dropdown-wrap"></span>
+                        <a th:href="@{/account/goRegister}" class="add-dropdown-title"><img th:src="@{/img/register.png}" alt="">注册</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="manage-msg">
+        <div class="main">
+            <div class="list-back">
+                <ul class="list">
+                    <a class="list-title" th:href="@{goNoVip}">
+                        <span class="before"></span>
+                        <span>普通用户</span>
+                        <span class="after"></span>
+                    </a>
+                    <a class="list-title"  th:href="@{goVip}">
+                        <span class="before"></span>
+                        <span>  &nbsp;vip用户</span>
+                        <span class="after"></span>
+                    </a>
+                    <a class="list-title  list-title-active"   th:href="@{goAccountFeedback}">
+                        <span class="before "></span>
+                        <span>  用户反馈</span>
+                        <span class="after"></span>
+                    </a>
+                </ul>
+            </div>
+            <div class="content">
+                <div class="container">
+                    <table class="feedback common" cellspacing="0" border="0">
+                        <thead>
+                        <tr>
+                            <th class="number"></th>
+                            <th class="user-name">用户名</th>
+                            <th class="email">邮箱</th>
+                            <th class="feedMsg">反馈信息</th>
+                            <th class="handle">操作</th>
+                        </tr>
+                        </thead>
+                        <tr th:each="accountFeedback:${accountFeedback}" class="NoVip">
+                            <td th:text="${accountFeedback.id}" class="common-id"></td>
+                            <td th:text="${accountFeedback.ranking}" class="common-ranking"></td>
+                            <td th:text="${accountFeedback.userName}"></td>
+                            <td th:text="${accountFeedback.email}"></td>
+                            <td th:text="${accountFeedback.accountFeedback}"></td>
+                            <td>
+                                <a th:href="@{'deleteAccountFeed?id='+${accountFeedback.id}}" class="del">删除</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="12">
+                                <ul class="pagination">
+                                    <li class="pre" th:if="${numFeed}!=1">
+                                        <a th:href="@{'searchFeed?upDown='+'down'}"></a>
+                                    </li>
+                                    <li style="width: 100px;">
+                                        <form class="pageForm" action="searchFeed" method="get">
+                                            第
+                                            <input name="page" type="text" class="pagination-input" th:value="${numFeed}">
+                                            页，共
+                                            <span th:text="${maxFeed}"></span>
+                                            页
+                                        </form>
+                                    </li>
+                                    <li th:if="${numFeed!=maxFeed}" class="next">
+                                        <a th:href="@{'searchFeed?upDown='+'up'}"></a>
+                                    </li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="common-over"></div>
+    <span class="isInput" th:text="${isDelete}"></span>
+    <div id="edition">Copyright © 2020 火图网 版权所有</div>
+</body>
+</html>

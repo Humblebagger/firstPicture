@@ -1,0 +1,232 @@
+*{
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    outline: none;
+    list-style: none;
+    box-sizing: border-box;
+}
+
+.add:after{
+    clear: both;
+    content: "";
+    height: 0;
+    visibility: hidden;
+}
+
+#head{
+    background:white;
+    width: 100%;
+    height: 65px;
+}
+
+#head-back{
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    height: 65px;
+}
+
+#header{
+    width: 1260px;
+    margin: 0 auto;
+    height: 65px;
+    padding: 10px 70px 0;
+    background: white;
+}
+
+.logo-text ,
+.main-logo-text{
+    vertical-align: middle;
+    display: inline-block;
+    color:#E60026;
+}
+
+.logo-text img ,
+.main-logo-text img{
+    width: 32px;
+    margin: 0 0 0 5px;
+    position: relative;
+    float: left;
+}
+
+#logo-way{
+    display: inline-block;
+    padding: 4px;
+    font-size: 22px;
+    color: #666666;
+    vertical-align: middle;
+}
+
+#logo-way .logo-dot{
+    font-size: 25px;
+}
+
+#login{
+    float: right;
+    position: relative;
+}
+
+.add{
+    position: relative;
+    color: #666;
+    font-size: 8px;
+    margin: 0 12px 0;
+    height: 55px;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.add img{
+    width: 32px;
+    height: auto;
+}
+
+.user{
+    margin:0 0 0 8px;
+    display: inline-block;
+    vertical-align: top;
+    position: relative;
+}
+
+.user .user-way{
+    height: 40px;
+    border: 1px solid #E60026;
+    margin: 5px 0 0 0;
+    display: inline-block;
+    vertical-align: top;
+    transition: 0.2s;
+    padding: 10px 5px;
+}
+
+.user .user-way:hover{
+    background:rgba(230,0,38);
+}
+
+.user-way a{
+    color:#E60026;
+}
+
+.user-way a:hover{
+    color:white;
+}
+
+.user .user-wrap{
+    position: absolute;
+    left:47.5%;
+    top:15px;
+    color: #E60026;
+}
+
+.user .left{
+    border-right:none ;
+    border-radius:6px 0 0 6px;
+}
+
+.user .right{
+    border-left:none ;
+    border-radius:0 6px 6px 0;
+    margin: 5px 0 0 -6px;
+}
+
+.add,.user span,.fields{
+    cursor: pointer;
+}
+
+.logo {
+    position: relative;
+    float: left;
+    margin: 5px 0 0 0;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.small-logo {
+    font-size: 2px;
+    font-weight: 400;
+    clear: both;
+    letter-spacing: 3px;
+    padding-left: 10px;
+}
+
+#edition{
+    width: 100%;
+    text-align: center;
+    min-width: 1250px;
+    font-size: 12px;
+    color: #666;
+    height: 60px;
+    line-height: 60px;
+}
+
+
+.login-btn,
+.register-btn{
+    border: none;
+    color: #fff;
+    width: 305px;
+    text-align: center;
+    background-color: #1592ef;
+    text-indent: 0;
+    border-radius: 10px;
+    text-shadow: 2px 2px 1px rgba(0, 0, 0, 0.2);
+    box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.2);
+    font-size: 20px;
+    height: 50px;
+    cursor: pointer;
+}
+
+.no-login,
+.to-login{
+    position: absolute;
+    bottom: 6%;
+    right: 10px;
+    color: #666;
+    font-size: 14px;
+}
+
+.no-login a,
+.to-login a{
+    color: #1592ef;
+    transition: 0.2s;
+}
+
+.no-login a:hover,
+.to-login a:hover{
+    color: #0000FF;
+}
+
+
+.user-msg{
+    height: 45px;
+    outline: none;
+    background: #eef6fd;
+    border-style: none;
+    border-bottom: 2px #d6e7fa solid;
+    width: 255px;
+    display: inline-block;
+    margin: 10px 0 0 -6px;
+    color: #666;
+    text-indent: 5px;
+}
+
+.register-icon img{
+    position: absolute;
+    top: 20px;
+    left: 17px;
+    width: 25px;
+    height: 25px;
+}
+
+.register-icon{
+    width: 50px;
+    display: inline-block;
+    background: #eef6fd;
+    border-style: none;
+    border-bottom: 2px #d6e7fa solid;
+    height: 45px;
+    margin: 10px 0;
+    vertical-align: top;
+}
